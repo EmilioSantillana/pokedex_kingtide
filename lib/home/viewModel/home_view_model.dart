@@ -25,13 +25,11 @@ abstract class HomeViewModelBase with Store {
     pokemonServiceState = PokemonServiceState.loading;
     try {
       if (pokemons.isNotEmpty) return pokemons;
-      final response =
-          await pokemonService.fetchAllPokemonsByGeneration(generationId: 1);
+      final response = await pokemonService.fetchAllPokemons();
       pokemons = response;
       pokemonServiceState = PokemonServiceState.success;
       return response;
     } catch (e) {
-      print(e);
       pokemonServiceState = PokemonServiceState.error;
       return [];
     }

@@ -62,13 +62,13 @@ class _HomeViewState extends State<HomeView> {
                             padding: const EdgeInsets.all(15),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
+                              children: [
                                 // Add an image widget to display an image
                                 SvgPicture.network(
                                   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg',
                                   height: 100,
                                   width: 100,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                 ),
                                 // Add some spacing between the image and the text
                                 Container(width: 20),
@@ -81,20 +81,20 @@ class _HomeViewState extends State<HomeView> {
                                       // Add some spacing between the top of the card and the title
                                       Container(height: 5),
                                       // Add a title widget
-                                      const Text(
-                                        "Cards Title 1",
+                                      Text(
+                                        pokemon.name ?? "No name",
                                       ),
                                       // Add some spacing between the title and the subtitle
                                       Container(height: 5),
                                       // Add a subtitle widget
-                                      const Text(
-                                        "Sub title",
+                                      Text(
+                                        "ID: ${pokemon.id}",
                                       ),
                                       // Add some spacing between the subtitle and the text
                                       Container(height: 10),
                                       // Add a text widget to display some text
-                                      Text(
-                                        pokemon.name ?? "No name",
+                                      const Text(
+                                        "asd",
                                         maxLines: 2,
                                       ),
                                     ],

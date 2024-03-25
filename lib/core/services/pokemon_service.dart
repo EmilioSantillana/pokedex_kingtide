@@ -8,28 +8,35 @@ class PokemonService extends IPokemonService {
 
   @override
   Future<List<PokemonModel?>> fetchAllPokemons() async {
-    List<PokemonModel?> generation1Pokemons = await fetchAllPokemonsByGeneration(generationId: 1);
-    List<PokemonModel?> generation2Pokemons = await fetchAllPokemonsByGeneration(generationId: 2);
+    List<PokemonModel?> generation1Pokemons =
+        await fetchAllPokemonsNameByGeneration(generationId: 1);
+    List<PokemonModel?> generation2Pokemons =
+        await fetchAllPokemonsNameByGeneration(generationId: 2);
 
     // Concatenar las dos listas de pokemones
     List<PokemonModel?> allPokemons = [];
     allPokemons.addAll(generation1Pokemons);
     allPokemons.addAll(generation2Pokemons);
 
+    allPokemons.sort((a, b) => (a?.id ?? 0).compareTo(b?.id ?? 0));
+    
     return allPokemons;
   }
 
   @override
-  Future<List<PokemonModel?>> fetchAllPokemonsByGeneration(
+  Future<List<PokemonModel?>> fetchAllPokemonsNameByGeneration(
       {required int generationId}) async {
     final response = await dio.get('generation/$generationId/');
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data['pokemon_species'] as List;
-      List<Future<PokemonModel?>> pokemonFutures = data
-          .map((entry) => fetchPokemonByName(pokemonName: entry['name']))
-          .toList();
-      List<PokemonModel?> pokemonList = await Future.wait(pokemonFutures);
-      return pokemonList;
+      List<PokemonModel?> pokemonName = data.map((item) {
+        // El ID se encuentra al final de la url
+        List<String> parts = item['url'].split("/");
+        int pokemonId = int.parse(parts[parts.length - 2]);
+
+        return PokemonModel(id: pokemonId, name: item['name']);
+      }).toList();
+      return pokemonName;
     }
     return [];
   }
