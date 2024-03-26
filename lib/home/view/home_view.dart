@@ -18,16 +18,19 @@ class _HomeViewState extends State<HomeView> {
   final HomeViewModel _homeViewModel = HomeViewModel(PokemonService(DioManager.instance.dio));
 
   final scrollController = ScrollController();
+  final int initialLimit = 100;
 
   @override
   void initState() {
     super.initState();
-    _homeViewModel.fetchAllPokemonService(limit: 10);
+    _homeViewModel.fetchAllPokemonService(limit: initialLimit);
 
     scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent == scrollController.offset) {
-        _homeViewModel.incrementOffset(10);
-        _homeViewModel.fetchAllPokemonService(limit: 10);
+      if (scrollController.position.maxScrollExtent == scrollController.offset && !_homeViewModel.allDataFetched.value) {
+        _homeViewModel.offset == 0 
+          ? _homeViewModel.offset += initialLimit 
+          : _homeViewModel.offset += 50;
+        _homeViewModel.fetchAllPokemonService(limit: 50);
       }
     });
   }
@@ -51,14 +54,24 @@ class _HomeViewState extends State<HomeView> {
       builder: (_) {
         switch (_homeViewModel.pokemonServiceState) {
           case PokemonServiceState.loading:
-            if(_homeViewModel.pokemons.isEmpty){
+            if (_homeViewModel.pokemons.isEmpty) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            else{
+            } else {
               List<PokemonModel?> pokemonsList = _homeViewModel.pokemons;
-              return PokemonListView(pokemonsList: pokemonsList);
+              return Column(
+                children: 
+                [
+                  Expanded(child: PokemonListView(pokemonsList: pokemonsList)),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ]
+              );
             }
           case PokemonServiceState.success:
             List<PokemonModel?> pokemonsList = _homeViewModel.pokemons;
@@ -88,11 +101,11 @@ class PokemonListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      key: const PageStorageKey(0),
-      controller: scrollController,
-      itemCount: pokemonsList.length,
-      itemBuilder: (context, index) {
-        PokemonModel? pokemon = pokemonsList[index];
+        key: const PageStorageKey(0),
+        controller: scrollController,
+        itemCount: pokemonsList.length,
+        itemBuilder: (context, index) {
+          PokemonModel? pokemon = pokemonsList[index];
           if (pokemon != null) {
             return Card(
               // Define the shape of the card
@@ -127,8 +140,7 @@ class PokemonListView extends StatelessWidget {
                         // Add an expanded widget to take up the remaining horizontal space
                         Expanded(
                           child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Add some spacing between the top of the card and the title
                               Container(height: 5),
@@ -161,7 +173,6 @@ class PokemonListView extends StatelessWidget {
           } else {
             return Container();
           }
-      }
-    );
+        });
   }
 }

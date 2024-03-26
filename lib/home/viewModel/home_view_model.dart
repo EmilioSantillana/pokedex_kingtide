@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '../../core/utils/primitive_wrapper.dart';
 import '../model/pokemon_model.dart';
 import '../../core/services/i_pokemon_service.dart';
 
@@ -15,12 +16,10 @@ abstract class HomeViewModelBase with Store {
   HomeViewModelBase(this.pokemonService);
 
   @observable
-  int offset = 0;
+  PrimitiveWrapper<bool> allDataFetched = PrimitiveWrapper<bool>(false);
 
-  @action
-  void incrementOffset(int value) {
-    offset += value;
-  }
+  @observable
+  int offset = 0;
 
   @observable
   List<PokemonModel?> pokemons = [];
@@ -35,7 +34,7 @@ abstract class HomeViewModelBase with Store {
 
     pokemonServiceState = PokemonServiceState.loading;
     try {
-      final response = await pokemonService.fetchAllPokemons(offset: offset, limit: limit);
+      final response = await pokemonService.fetchAllPokemons(offset: offset, limit: limit, allDataFetched: allDataFetched);
       pokemons.addAll(response);
       pokemonServiceState = PokemonServiceState.success;
       return response;
