@@ -1,8 +1,8 @@
 import 'package:mobx/mobx.dart';
 
-import '../../core/utils/primitive_wrapper.dart';
+import '../../../core/utils/primitive_wrapper.dart';
 import '../model/pokemon_model.dart';
-import '../../core/services/i_pokemon_service.dart';
+import '../../../core/services/i_pokemon_service.dart';
 
 part 'home_view_model.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../home/model/pokemon_model.dart';
+import '../../views/home/model/pokemon_model.dart';
 import '../utils/primitive_wrapper.dart';
 
 abstract class IPokemonService {
