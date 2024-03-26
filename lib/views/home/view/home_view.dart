@@ -5,9 +5,8 @@ import '../../../core/network/dio_manager.dart';
 import '../../../core/services/pokemon_service.dart';
 import '../../../core/widgets/gradient_text.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
-import '../model/pokemon_model.dart';
-import '../viewModel/home_view_model.dart';
 import '../../../core/widgets/pokemon_list_view.dart';
+import '../viewModel/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -85,7 +84,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               );
             } else {
-              List<PokemonModel?> pokemonsList = _homeViewModel.pokemons;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -93,7 +91,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Center(
                       child: SizedBox(
                           width: 400,
-                          child: PokemonListView(pokemonsList: pokemonsList)),
+                          child: PokemonListView(pokemonsList: _homeViewModel.pokemons)),
                     ),
                   ),
                   const Padding(
@@ -110,13 +108,14 @@ class _HomeViewState extends State<HomeView> {
               );
             }
           case PokemonServiceState.success:
-            List<PokemonModel?> pokemonsList = _homeViewModel.pokemons;
             return Center(
               child: Container(
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: PokemonListView(
-                      scrollController: scrollController,
-                      pokemonsList: pokemonsList)),
+                child: PokemonListView(
+                  scrollController: scrollController,
+                  pokemonsList: _homeViewModel.pokemons
+                ),
+              ),
             );
           case PokemonServiceState.error:
             return const Center(
