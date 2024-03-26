@@ -34,11 +34,13 @@ abstract class HomeViewModelBase with Store {
 
     pokemonServiceState = PokemonServiceState.loading;
     try {
-      final response = await pokemonService.fetchAllPokemons(offset: offset, limit: limit, allDataFetched: allDataFetched);
+      final response = await pokemonService.fetchAllPokemons(
+          offset: offset, limit: limit, allDataFetched: allDataFetched);
       pokemons.addAll(response);
       pokemonServiceState = PokemonServiceState.success;
       return response;
     } catch (e) {
+      print(e);
       pokemonServiceState = PokemonServiceState.error;
       return [];
     }

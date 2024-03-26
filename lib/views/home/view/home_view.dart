@@ -92,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
                   Expanded(
                     child: Center(
                       child: SizedBox(
-                          width: 300,
+                          width: 400,
                           child: PokemonListView(pokemonsList: pokemonsList)),
                     ),
                   ),
@@ -112,8 +112,8 @@ class _HomeViewState extends State<HomeView> {
           case PokemonServiceState.success:
             List<PokemonModel?> pokemonsList = _homeViewModel.pokemons;
             return Center(
-              child: SizedBox(
-                  width: 300,
+              child: Container(
+                padding: const EdgeInsets.only(left: 10, right: 10),
                   child: PokemonListView(
                       scrollController: scrollController,
                       pokemonsList: pokemonsList)),

@@ -31,6 +31,7 @@ mixin _$PokemonModel {
   bool? get isDefault => throw _privateConstructorUsedError;
   @JsonKey(name: 'svg_url')
   String? get svgUrl => throw _privateConstructorUsedError;
+  List<PokemonTypes>? get types => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +53,8 @@ abstract class $PokemonModelCopyWith<$Res> {
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
       @JsonKey(name: 'is_default') bool? isDefault,
-      @JsonKey(name: 'svg_url') String? svgUrl});
+      @JsonKey(name: 'svg_url') String? svgUrl,
+      List<PokemonTypes>? types});
 }
 
 /// @nodoc
@@ -76,6 +78,7 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
     Object? baseExperience = freezed,
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
+    Object? types = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -110,6 +113,10 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.svgUrl
           : svgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      types: freezed == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<PokemonTypes>?,
     ) as $Val);
   }
 }
@@ -130,7 +137,8 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
       @JsonKey(name: 'is_default') bool? isDefault,
-      @JsonKey(name: 'svg_url') String? svgUrl});
+      @JsonKey(name: 'svg_url') String? svgUrl,
+      List<PokemonTypes>? types});
 }
 
 /// @nodoc
@@ -152,6 +160,7 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
     Object? baseExperience = freezed,
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
+    Object? types = freezed,
   }) {
     return _then(_$PokemonModelImpl(
       id: freezed == id
@@ -186,6 +195,10 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value.svgUrl
           : svgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      types: freezed == types
+          ? _value._types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<PokemonTypes>?,
     ));
   }
 }
@@ -201,7 +214,9 @@ class _$PokemonModelImpl implements _PokemonModel {
       this.weight,
       @JsonKey(name: 'base_experience') this.baseExperience,
       @JsonKey(name: 'is_default') this.isDefault,
-      @JsonKey(name: 'svg_url') this.svgUrl});
+      @JsonKey(name: 'svg_url') this.svgUrl,
+      final List<PokemonTypes>? types})
+      : _types = types;
 
   factory _$PokemonModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PokemonModelImplFromJson(json);
@@ -225,10 +240,19 @@ class _$PokemonModelImpl implements _PokemonModel {
   @override
   @JsonKey(name: 'svg_url')
   final String? svgUrl;
+  final List<PokemonTypes>? _types;
+  @override
+  List<PokemonTypes>? get types {
+    final value = _types;
+    if (value == null) return null;
+    if (_types is EqualUnmodifiableListView) return _types;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, isDefault: $isDefault, svgUrl: $svgUrl)';
+    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, isDefault: $isDefault, svgUrl: $svgUrl, types: $types)';
   }
 
   @override
@@ -245,13 +269,23 @@ class _$PokemonModelImpl implements _PokemonModel {
                 other.baseExperience == baseExperience) &&
             (identical(other.isDefault, isDefault) ||
                 other.isDefault == isDefault) &&
-            (identical(other.svgUrl, svgUrl) || other.svgUrl == svgUrl));
+            (identical(other.svgUrl, svgUrl) || other.svgUrl == svgUrl) &&
+            const DeepCollectionEquality().equals(other._types, _types));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, order, height, weight,
-      baseExperience, isDefault, svgUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      order,
+      height,
+      weight,
+      baseExperience,
+      isDefault,
+      svgUrl,
+      const DeepCollectionEquality().hash(_types));
 
   @JsonKey(ignore: true)
   @override
@@ -276,7 +310,8 @@ abstract class _PokemonModel implements PokemonModel {
       final int? weight,
       @JsonKey(name: 'base_experience') final int? baseExperience,
       @JsonKey(name: 'is_default') final bool? isDefault,
-      @JsonKey(name: 'svg_url') final String? svgUrl}) = _$PokemonModelImpl;
+      @JsonKey(name: 'svg_url') final String? svgUrl,
+      final List<PokemonTypes>? types}) = _$PokemonModelImpl;
 
   factory _PokemonModel.fromJson(Map<String, dynamic> json) =
       _$PokemonModelImpl.fromJson;
@@ -300,6 +335,8 @@ abstract class _PokemonModel implements PokemonModel {
   @override
   @JsonKey(name: 'svg_url')
   String? get svgUrl;
+  @override
+  List<PokemonTypes>? get types;
   @override
   @JsonKey(ignore: true)
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>

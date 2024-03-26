@@ -74,8 +74,7 @@ class PokemonService extends IPokemonService {
       var data = response.data as Map<String, dynamic>;
 
       // Agregar valor svg
-      data['svg_url'] =
-          data['sprites']['other']['dream_world']['front_default'];
+      data['svg_url'] = data['sprites']['other']['dream_world']['front_default'];
 
       PokemonModel pokemon = PokemonModel.fromJson(data);
       return pokemon;
@@ -84,15 +83,16 @@ class PokemonService extends IPokemonService {
   }
 
   @override
-  Future<PokemonModel?> fetchPokemonByName(
-      {required String pokemonName}) async {
+  Future<PokemonModel?> fetchPokemonByName({required String pokemonName}) async {
     final response = await dio.get('pokemon/$pokemonName/');
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data as Map<String, dynamic>;
 
       // Agregar valor svg
-      data['svg_url'] =
-          data['sprites']['other']['dream_world']['front_default'];
+      data['svg_url'] = data['sprites']['other']['dream_world']['front_default'];
+
+      List<String> typeNames = data['types'].map<String>((type) => type['type']['name'] as String).toList();
+      data['types'] = typeNames;
 
       PokemonModel pokemon = PokemonModel.fromJson(data);
       return pokemon;
