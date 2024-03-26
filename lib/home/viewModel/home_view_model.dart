@@ -15,18 +15,28 @@ abstract class HomeViewModelBase with Store {
   HomeViewModelBase(this.pokemonService);
 
   @observable
+  int offset = 0;
+
+  @action
+  void incrementOffset(int value) {
+    offset += value;
+  }
+
+  @observable
   List<PokemonModel?> pokemons = [];
 
   @observable
   PokemonServiceState pokemonServiceState = PokemonServiceState.normal;
 
   @action
-  Future<List<PokemonModel?>> fetchAllPokemonService() async {
+  Future<List<PokemonModel?>> fetchAllPokemonService(
+      {required int limit}) async {
+    if (pokemonServiceState == PokemonServiceState.loading) return pokemons;
+
     pokemonServiceState = PokemonServiceState.loading;
     try {
-      if (pokemons.isNotEmpty) return pokemons;
-      final response = await pokemonService.fetchAllPokemons();
-      pokemons = response;
+      final response = await pokemonService.fetchAllPokemons(offset: offset, limit: limit);
+      pokemons.addAll(response);
       pokemonServiceState = PokemonServiceState.success;
       return response;
     } catch (e) {
