@@ -20,11 +20,7 @@ class PokemonListView extends StatelessWidget {
       itemCount: pokemonsList.length,
       itemBuilder: (context, index) {
         PokemonModel? pokemon = pokemonsList[index];
-        if (pokemon != null) {
-          return PokemonCard(pokemon: pokemon);
-        } else {
-          return Container();
-        }
+        return pokemon != null ? PokemonCard(pokemon: pokemon) : Container();
       }
     );
   }

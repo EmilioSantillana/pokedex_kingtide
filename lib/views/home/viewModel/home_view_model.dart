@@ -11,38 +11,45 @@ enum PokemonServiceState { loading, error, success, normal }
 class HomeViewModel = HomeViewModelBase with _$HomeViewModel;
 
 abstract class HomeViewModelBase with Store {
-  final IPokemonService pokemonService;
-
   HomeViewModelBase(this.pokemonService);
 
-  @observable
-  PrimitiveWrapper<bool> allDataFetched = PrimitiveWrapper<bool>(false);
+  final IPokemonService pokemonService;
+
+  final int initialLimit = 100;
 
   @observable
   int offset = 0;
 
   @observable
+  PrimitiveWrapper<bool> allDataFetched = PrimitiveWrapper<bool>(false);
+
+  @observable
   List<PokemonModel?> pokemons = [];
+
+  @observable
+  List<PokemonModel?> filteredPokemons = [];
+
+  @observable
+  bool isFiltered = false;
 
   @observable
   PokemonServiceState pokemonServiceState = PokemonServiceState.normal;
 
   @action
-  Future<List<PokemonModel?>> fetchAllPokemonService(
-      {required int limit}) async {
-    if (pokemonServiceState == PokemonServiceState.loading) return pokemons;
-
+  Future<void> fetchAllPokemonService() async {
     pokemonServiceState = PokemonServiceState.loading;
     try {
       final response = await pokemonService.fetchAllPokemons(
-          offset: offset, limit: limit, allDataFetched: allDataFetched);
+        offset: offset, 
+        limit: initialLimit, 
+        allDataFetched: allDataFetched
+      );
       pokemons.addAll(response);
+      filteredPokemons = pokemons;
       pokemonServiceState = PokemonServiceState.success;
-      return response;
     } catch (e) {
       print(e);
       pokemonServiceState = PokemonServiceState.error;
-      return [];
     }
   }
 }

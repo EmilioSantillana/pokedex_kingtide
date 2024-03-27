@@ -5,8 +5,8 @@ import '../../../core/network/dio_manager.dart';
 import '../../../core/services/pokemon_service.dart';
 import '../../../core/widgets/gradient_text.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
-import '../../../core/widgets/pokemon_list_view.dart';
 import '../viewModel/home_view_model.dart';
+import 'pokemons_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,30 +19,25 @@ class _HomeViewState extends State<HomeView> {
   final HomeViewModel _homeViewModel =
       HomeViewModel(PokemonService(DioManager.instance.dio));
 
-  final scrollController = ScrollController();
-  final int initialLimit = 100;
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _homeViewModel.fetchAllPokemonService(limit: initialLimit);
+    _homeViewModel.fetchAllPokemonService();
 
-    //Paginacion (queda descartado por el momento)
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-              scrollController.offset &&
-          !_homeViewModel.allDataFetched.value) {
-        _homeViewModel.offset == 0
-            ? _homeViewModel.offset += initialLimit
-            : _homeViewModel.offset += 50;
-        _homeViewModel.fetchAllPokemonService(limit: 50);
-      }
-    });
+    //Paginacion
+    _scrollController.addListener(paginate);
+
+    //Buscador
+    _searchController.addListener(filterPokemons);
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
+    _scrollController.dispose();
+    _searchController.dispose();
 
     super.dispose();
   }
@@ -53,78 +48,90 @@ class _HomeViewState extends State<HomeView> {
       theme: ThemeData(
         fontFamily: 'Pokemon',
       ),
-      home: Scaffold(body: _buildPokemonList()),
+      home: _buildHomeView(),
     );
   }
 
-  Observer _buildPokemonList() {
+  Observer _buildHomeView() {
     return Observer(
       builder: (_) {
         switch (_homeViewModel.pokemonServiceState) {
           case PokemonServiceState.loading:
             if (_homeViewModel.pokemons.isEmpty) {
-              return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    PokeballProgressIndicator(
-                      pokeballSize: 200,
-                      barRadius: 250,
-                      strokeWidth: 25,
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    GradientText(
-                      text: "Loading Pokedex",
-                      colors: [Colors.red, Colors.orange],
-                    )
-                  ],
+              return const Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      PokeballProgressIndicator(
+                        pokeballSize: 200,
+                        barRadius: 250,
+                        strokeWidth: 25,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      GradientText(
+                        text: "Loading Pokedex...",
+                        colors: [Colors.red, Colors.orange],
+                      ),
+                    ],
+                  ),
                 ),
               );
             } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Center(
-                      child: SizedBox(
-                          width: 400,
-                          child: PokemonListView(pokemonsList: _homeViewModel.pokemons)),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Center(
-                      child: PokeballProgressIndicator(
-                        pokeballSize: 50,
-                        barRadius: 55,
-                        strokeWidth: 10,
-                      ),
-                    ),
-                  ),
-                ],
+              return PokemonsView(
+                searchController: _searchController,
+                homeViewModel: _homeViewModel,
+                isLoading: true,
               );
             }
           case PokemonServiceState.success:
-            return Center(
-              child: Container(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: PokemonListView(
-                  scrollController: scrollController,
-                  pokemonsList: _homeViewModel.pokemons
-                ),
-              ),
+            return PokemonsView(
+              searchController: _searchController,
+              homeViewModel: _homeViewModel,
+              scrollController: _scrollController,
             );
           case PokemonServiceState.error:
             return const Center(
-              child: Text("Something went wrong!"),
+              child: GradientText(
+                text: "Something went wrong!",
+                colors: [Colors.red, Colors.orange],
+              ),
             );
           default:
             return const SizedBox.shrink();
         }
       },
     );
+  }
+
+  void paginate() {
+    if(_homeViewModel.isFiltered) return;
+    
+    if (_scrollController.position.maxScrollExtent == _scrollController.offset 
+      && _homeViewModel.pokemonServiceState != PokemonServiceState.loading 
+      && !_homeViewModel.allDataFetched.value) {
+      _homeViewModel.offset == 0
+          ? _homeViewModel.offset += _homeViewModel.initialLimit
+          : _homeViewModel.offset += 50;
+      _homeViewModel.fetchAllPokemonService();
+    }
+  }
+
+  void filterPokemons() {
+    if (_searchController.text.isNotEmpty) {
+      _homeViewModel.filteredPokemons = _homeViewModel.pokemons
+          .where((pokemon) => pokemon!.name!
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
+          .toList();
+
+      _homeViewModel.isFiltered = true;
+    } else {
+      _homeViewModel.filteredPokemons = _homeViewModel.pokemons;
+      _homeViewModel.isFiltered = false;
+    }
   }
 }
