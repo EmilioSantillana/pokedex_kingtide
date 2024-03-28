@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
 import '../../../core/widgets/pokemon_list_view.dart';
+import '../../../core/widgets/pokemon_type_filter_dialog.dart';
 import '../viewModel/home_view_model.dart';
 
 class PokemonsView extends StatelessWidget {
@@ -26,7 +26,7 @@ class PokemonsView extends StatelessWidget {
 
   Observer _buildMainHomeView() {
     return Observer(
-      builder: (_){
+      builder: (context){
         return Scaffold(
           appBar: AppBar(
             flexibleSpace: Container(
@@ -48,7 +48,7 @@ class PokemonsView extends StatelessWidget {
                       barRadius: 30,
                       strokeWidth: 5,
                     ),
-                )
+                  )
                 : Container(),
                 Expanded(
                   child: TextField(
@@ -62,6 +62,15 @@ class PokemonsView extends StatelessWidget {
                       border: InputBorder.none,
                     ),
                   ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.filter_list, color: Colors.white),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => PokemonTypeFilterDialog(homeViewModel: homeViewModel),
+                    );
+                  },
                 ),
               ],
             ),
@@ -96,7 +105,7 @@ class PokemonsView extends StatelessWidget {
             ],
           ),
         );
-      }
+      },
     );
   }
 }

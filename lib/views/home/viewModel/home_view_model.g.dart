@@ -105,6 +105,23 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
     });
   }
 
+  late final _$selectedPokemonTypesAtom =
+      Atom(name: 'HomeViewModelBase.selectedPokemonTypes', context: context);
+
+  @override
+  Set<PokemonTypes> get selectedPokemonTypes {
+    _$selectedPokemonTypesAtom.reportRead();
+    return super.selectedPokemonTypes;
+  }
+
+  @override
+  set selectedPokemonTypes(Set<PokemonTypes> value) {
+    _$selectedPokemonTypesAtom.reportWrite(value, super.selectedPokemonTypes,
+        () {
+      super.selectedPokemonTypes = value;
+    });
+  }
+
   late final _$isFilteredAtom =
       Atom(name: 'HomeViewModelBase.isFiltered', context: context);
 
@@ -166,6 +183,7 @@ allDataFetched: ${allDataFetched},
 allPokemonsName: ${allPokemonsName},
 pokemons: ${pokemons},
 filteredPokemons: ${filteredPokemons},
+selectedPokemonTypes: ${selectedPokemonTypes},
 isFiltered: ${isFiltered},
 pokemonServiceState: ${pokemonServiceState}
     ''';

@@ -33,6 +33,9 @@ abstract class HomeViewModelBase with Store {
   Set<PokemonModel?> filteredPokemons = {};
 
   @observable
+  Set<PokemonTypes> selectedPokemonTypes = {};
+
+  @observable
   bool isFiltered = false;
 
   @observable
