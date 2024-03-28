@@ -48,8 +48,15 @@ abstract class HomeViewModelBase with Store {
       await _fetchAllPokemons();
 
       // Ordenar la lista por ID
-      pokemons.toList().sort((a, b) => a!.id!.compareTo(b!.id!));
-      filteredPokemons.toList().sort((a, b) => a!.id!.compareTo(b!.id!));
+      void sortAndConvertListToSet(List<PokemonModel?> list) {
+          list.sort((a, b) => a!.id!.compareTo(b!.id!));
+      }
+      final List<PokemonModel?> pokemonsList = pokemons.toList();
+      final List<PokemonModel?> filteredPokemonsList = filteredPokemons.toList();
+      sortAndConvertListToSet(pokemonsList);
+      sortAndConvertListToSet(filteredPokemonsList);
+      pokemons = Set<PokemonModel?>.from(pokemonsList);
+      filteredPokemons = Set<PokemonModel?>.from(filteredPokemonsList);
 
       allDataFetched = pokemons.length == allPokemonsName.length;
       
@@ -67,8 +74,15 @@ abstract class HomeViewModelBase with Store {
       await _fetchPokemonsByNames(pokemonsNames: pokemonsNames);
 
       // Ordenar la lista por ID
-      pokemons.toList().sort((a, b) => a!.id!.compareTo(b!.id!));
-      filteredPokemons.toList().sort((a, b) => a!.id!.compareTo(b!.id!));
+      void sortAndConvertListToSet(List<PokemonModel?> list) {
+          list.sort((a, b) => a!.id!.compareTo(b!.id!));
+      }
+      final List<PokemonModel?> pokemonsList = pokemons.toList();
+      final List<PokemonModel?> filteredPokemonsList = filteredPokemons.toList();
+      sortAndConvertListToSet(pokemonsList);
+      sortAndConvertListToSet(filteredPokemonsList);
+      pokemons = Set<PokemonModel?>.from(pokemonsList);
+      filteredPokemons = Set<PokemonModel?>.from(filteredPokemonsList);
 
       allDataFetched = pokemons.length == allPokemonsName.length;
 

@@ -38,6 +38,7 @@ class PokemonsView extends StatelessWidget {
               ),
             ),
             title: TextField(
+              enabled: !isLoading,
               controller: searchController,
               style: const TextStyle(color: Colors.white),
               cursorColor: Colors.white,

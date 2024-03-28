@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -16,11 +18,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final HomeViewModel _homeViewModel =
-      HomeViewModel(PokemonService(DioManager.instance.dio));
+  final HomeViewModel _homeViewModel = HomeViewModel(PokemonService(DioManager.instance.dio));
 
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -31,10 +33,16 @@ class _HomeViewState extends State<HomeView> {
     _scrollController.addListener(getPaginatedPokemons);
 
     //Buscador
-    _searchController.addListener(() async{
-      if (_homeViewModel.pokemonServiceState != PokemonServiceState.loading) {
-        await filterPokemons();
+    _searchController.addListener(() {
+      // Cancelar el temporizador anterior si existe
+      if (_debounceTimer != null && _debounceTimer!.isActive) {
+        _debounceTimer!.cancel();
       }
+
+      // Configurar un nuevo temporizador de debouncing
+      _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+        filterPokemons();
+      });
     });
   }
 
@@ -125,6 +133,8 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> filterPokemons() async{
+    if(_homeViewModel.pokemonServiceState == PokemonServiceState.loading) return;
+
     if (_searchController.text.isNotEmpty) {
       _homeViewModel.filteredPokemons = _homeViewModel.pokemons
           .where((pokemon) => pokemon!.name!
