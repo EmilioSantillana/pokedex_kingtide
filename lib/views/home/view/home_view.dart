@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
       }
 
       // Configurar un nuevo temporizador de debouncing
-      _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
         filterPokemons();
       });
     });

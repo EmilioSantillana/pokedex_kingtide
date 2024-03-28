@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
 import '../../../core/widgets/pokemon_list_view.dart';
@@ -31,22 +32,38 @@ class PokemonsView extends StatelessWidget {
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.red, Colors.orange],
+                  colors: [Colors.orange, Colors.red],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
               ),
             ),
-            title: TextField(
-              enabled: !isLoading,
-              controller: searchController,
-              style: const TextStyle(color: Colors.white),
-              cursorColor: Colors.white,
-              decoration: const InputDecoration(
-                hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.white54),
-                border: InputBorder.none,
-              ),
+            title: Row(
+              children: [
+                isLoading 
+                ? Container(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: const PokeballProgressIndicator(
+                      pokeballSize: 25,
+                      barRadius: 30,
+                      strokeWidth: 5,
+                    ),
+                )
+                : Container(),
+                Expanded(
+                  child: TextField(
+                    enabled: !isLoading,
+                    controller: searchController,
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.white54),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           body: Column(
