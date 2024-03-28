@@ -28,10 +28,14 @@ class _HomeViewState extends State<HomeView> {
     _homeViewModel.fetchAllPokemonService();
 
     //Paginacion
-    _scrollController.addListener(paginate);
+    _scrollController.addListener(getPaginatedPokemons);
 
     //Buscador
-    _searchController.addListener(filterPokemons);
+    _searchController.addListener(() async{
+      if (_homeViewModel.pokemonServiceState != PokemonServiceState.loading) {
+        await filterPokemons();
+      }
+    });
   }
 
   @override
@@ -94,10 +98,12 @@ class _HomeViewState extends State<HomeView> {
               scrollController: _scrollController,
             );
           case PokemonServiceState.error:
-            return const Center(
-              child: GradientText(
-                text: "Something went wrong!",
-                colors: [Colors.red, Colors.orange],
+            return const Scaffold(
+              body: Center(
+                child: GradientText(
+                  text: "Something went wrong!",
+                  colors: [Colors.red, Colors.orange],
+                ),
               ),
             );
           default:
@@ -107,26 +113,38 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void paginate() {
-    if(_homeViewModel.isFiltered) return;
+  void getPaginatedPokemons() {
+    if(_homeViewModel.isFiltered 
+    || _homeViewModel.pokemonServiceState == PokemonServiceState.loading 
+    || _homeViewModel.allDataFetched) return;
     
-    if (_scrollController.position.maxScrollExtent == _scrollController.offset 
-      && _homeViewModel.pokemonServiceState != PokemonServiceState.loading 
-      && !_homeViewModel.allDataFetched.value) {
-      _homeViewModel.offset == 0
-          ? _homeViewModel.offset += _homeViewModel.initialLimit
-          : _homeViewModel.offset += 50;
+    if (_scrollController.position.maxScrollExtent == _scrollController.offset) {
+      _homeViewModel.currentLimit = 50;
       _homeViewModel.fetchAllPokemonService();
     }
   }
 
-  void filterPokemons() {
+  Future<void> filterPokemons() async{
     if (_searchController.text.isNotEmpty) {
       _homeViewModel.filteredPokemons = _homeViewModel.pokemons
           .where((pokemon) => pokemon!.name!
-              .toLowerCase()
-              .contains(_searchController.text.toLowerCase()))
-          .toList();
+            .toLowerCase()
+            .contains(_searchController.text.toLowerCase())
+          ).toSet();
+
+      final filteredPokemonsName = _homeViewModel.allPokemonsName
+        .where(
+          (name) => name.toLowerCase().contains(_searchController.text.toLowerCase())
+        )
+        .where(
+          (name) => !_homeViewModel.pokemons.any(
+            (pokemon) => pokemon!.name!.toLowerCase() == name.toLowerCase()
+          )
+        ).toList();
+
+      if (filteredPokemonsName.isNotEmpty){
+        _homeViewModel.fetchPokemonsByNamesService(pokemonsNames: filteredPokemonsName);
+      }
 
       _homeViewModel.isFiltered = true;
     } else {

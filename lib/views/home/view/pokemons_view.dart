@@ -56,7 +56,7 @@ class PokemonsView extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: PokemonListView(
-                      pokemonsList: homeViewModel.filteredPokemons,
+                      pokemonsList: homeViewModel.filteredPokemons.toList(),
                       scrollController: scrollController,
                     ),
                   ),
