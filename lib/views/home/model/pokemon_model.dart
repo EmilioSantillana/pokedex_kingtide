@@ -36,7 +36,7 @@ class PokemonModel with _$PokemonModel {
     @JsonKey(name: 'base_experience') int? baseExperience,
     @JsonKey(name: 'is_default') bool? isDefault,
     @JsonKey(name: 'svg_url') String? svgUrl,
-    List<PokemonTypes>? types,
+    Set<PokemonTypes>? types,
   }) = _PokemonModel;
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) => _$PokemonModelFromJson(json);

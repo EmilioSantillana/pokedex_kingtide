@@ -57,6 +57,38 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
     });
   }
 
+  late final _$isFilteredAtom =
+      Atom(name: 'HomeViewModelBase.isFiltered', context: context);
+
+  @override
+  bool get isFiltered {
+    _$isFilteredAtom.reportRead();
+    return super.isFiltered;
+  }
+
+  @override
+  set isFiltered(bool value) {
+    _$isFilteredAtom.reportWrite(value, super.isFiltered, () {
+      super.isFiltered = value;
+    });
+  }
+
+  late final _$isFirstLoadAtom =
+      Atom(name: 'HomeViewModelBase.isFirstLoad', context: context);
+
+  @override
+  bool get isFirstLoad {
+    _$isFirstLoadAtom.reportRead();
+    return super.isFirstLoad;
+  }
+
+  @override
+  set isFirstLoad(bool value) {
+    _$isFirstLoadAtom.reportWrite(value, super.isFirstLoad, () {
+      super.isFirstLoad = value;
+    });
+  }
+
   late final _$allPokemonsNameAtom =
       Atom(name: 'HomeViewModelBase.allPokemonsName', context: context);
 
@@ -122,19 +154,19 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
     });
   }
 
-  late final _$isFilteredAtom =
-      Atom(name: 'HomeViewModelBase.isFiltered', context: context);
+  late final _$searchTextAtom =
+      Atom(name: 'HomeViewModelBase.searchText', context: context);
 
   @override
-  bool get isFiltered {
-    _$isFilteredAtom.reportRead();
-    return super.isFiltered;
+  String get searchText {
+    _$searchTextAtom.reportRead();
+    return super.searchText;
   }
 
   @override
-  set isFiltered(bool value) {
-    _$isFilteredAtom.reportWrite(value, super.isFiltered, () {
-      super.isFiltered = value;
+  set searchText(String value) {
+    _$searchTextAtom.reportWrite(value, super.searchText, () {
+      super.searchText = value;
     });
   }
 
@@ -163,15 +195,13 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
         .run(() => super.fetchAllPokemonService());
   }
 
-  late final _$fetchPokemonsByNamesServiceAsyncAction = AsyncAction(
-      'HomeViewModelBase.fetchPokemonsByNamesService',
-      context: context);
+  late final _$filterPokemonsServiceAsyncAction =
+      AsyncAction('HomeViewModelBase.filterPokemonsService', context: context);
 
   @override
-  Future<void> fetchPokemonsByNamesService(
-      {required List<String> pokemonsNames}) {
-    return _$fetchPokemonsByNamesServiceAsyncAction.run(
-        () => super.fetchPokemonsByNamesService(pokemonsNames: pokemonsNames));
+  Future<void> filterPokemonsService() {
+    return _$filterPokemonsServiceAsyncAction
+        .run(() => super.filterPokemonsService());
   }
 
   @override
@@ -180,11 +210,13 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
 currentLimit: ${currentLimit},
 offset: ${offset},
 allDataFetched: ${allDataFetched},
+isFiltered: ${isFiltered},
+isFirstLoad: ${isFirstLoad},
 allPokemonsName: ${allPokemonsName},
 pokemons: ${pokemons},
 filteredPokemons: ${filteredPokemons},
 selectedPokemonTypes: ${selectedPokemonTypes},
-isFiltered: ${isFiltered},
+searchText: ${searchText},
 pokemonServiceState: ${pokemonServiceState}
     ''';
   }

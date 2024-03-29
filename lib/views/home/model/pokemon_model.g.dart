@@ -18,7 +18,7 @@ _$PokemonModelImpl _$$PokemonModelImplFromJson(Map<String, dynamic> json) =>
       svgUrl: json['svg_url'] as String?,
       types: (json['types'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$PokemonTypesEnumMap, e))
-          .toList(),
+          .toSet(),
     );
 
 Map<String, dynamic> _$$PokemonModelImplToJson(_$PokemonModelImpl instance) =>

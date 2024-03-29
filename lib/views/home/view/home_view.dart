@@ -41,7 +41,8 @@ class _HomeViewState extends State<HomeView> {
 
       // Configurar un nuevo temporizador de debouncing
       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-        filterPokemons();
+        _homeViewModel.searchText = _searchController.text;
+        _homeViewModel.filterPokemonsService();
       });
     });
   }
@@ -129,37 +130,6 @@ class _HomeViewState extends State<HomeView> {
     if (_scrollController.position.maxScrollExtent == _scrollController.offset) {
       _homeViewModel.currentLimit = 50;
       _homeViewModel.fetchAllPokemonService();
-    }
-  }
-
-  Future<void> filterPokemons() async{
-    if(_homeViewModel.pokemonServiceState == PokemonServiceState.loading) return;
-
-    if (_searchController.text.isNotEmpty) {
-      _homeViewModel.filteredPokemons = _homeViewModel.pokemons
-          .where((pokemon) => pokemon!.name!
-            .toLowerCase()
-            .contains(_searchController.text.toLowerCase())
-          ).toSet();
-
-      final filteredPokemonsName = _homeViewModel.allPokemonsName
-        .where(
-          (name) => name.toLowerCase().contains(_searchController.text.toLowerCase())
-        )
-        .where(
-          (name) => !_homeViewModel.pokemons.any(
-            (pokemon) => pokemon!.name!.toLowerCase() == name.toLowerCase()
-          )
-        ).toList();
-
-      if (filteredPokemonsName.isNotEmpty){
-        _homeViewModel.fetchPokemonsByNamesService(pokemonsNames: filteredPokemonsName);
-      }
-
-      _homeViewModel.isFiltered = true;
-    } else {
-      _homeViewModel.filteredPokemons = _homeViewModel.pokemons;
-      _homeViewModel.isFiltered = false;
     }
   }
 }

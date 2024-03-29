@@ -24,6 +24,12 @@ abstract class HomeViewModelBase with Store {
   bool allDataFetched = false;
 
   @observable
+  bool isFiltered = false;
+
+  @observable
+  bool isFirstLoad = true;
+
+  @observable
   Set<String> allPokemonsName = {};
 
   @observable
@@ -36,7 +42,7 @@ abstract class HomeViewModelBase with Store {
   Set<PokemonTypes> selectedPokemonTypes = {};
 
   @observable
-  bool isFiltered = false;
+  String searchText = '';
 
   @observable
   PokemonServiceState pokemonServiceState = PokemonServiceState.normal;
@@ -45,24 +51,17 @@ abstract class HomeViewModelBase with Store {
   Future<void> fetchAllPokemonService() async {
     pokemonServiceState = PokemonServiceState.loading;
     try {
+      //Obtenemos la lista de nombres de pokemones por consumir
       if(allPokemonsName.isEmpty){
         await _fetchAllPokemonsName();
       }
-      await _fetchAllPokemons();
+      //Consumimos todos los pokemones usando paginacion
+      await _fetchAllPokemonsWithPagination();
 
-      // Ordenar la lista por ID
-      void sortAndConvertListToSet(List<PokemonModel?> list) {
-          list.sort((a, b) => a!.id!.compareTo(b!.id!));
-      }
-      final List<PokemonModel?> pokemonsList = pokemons.toList();
-      final List<PokemonModel?> filteredPokemonsList = filteredPokemons.toList();
-      sortAndConvertListToSet(pokemonsList);
-      sortAndConvertListToSet(filteredPokemonsList);
-      pokemons = Set<PokemonModel?>.from(pokemonsList);
-      filteredPokemons = Set<PokemonModel?>.from(filteredPokemonsList);
+      //Filtramos pokemones
+      await _filterPokemons();
 
-      allDataFetched = pokemons.length == allPokemonsName.length;
-      
+      await success();
       pokemonServiceState = PokemonServiceState.success;
     } catch (e) {
       print(e);
@@ -71,31 +70,21 @@ abstract class HomeViewModelBase with Store {
   }
 
   @action
-  Future<void> fetchPokemonsByNamesService({required List<String> pokemonsNames}) async {
+  Future<void> filterPokemonsService() async{
     pokemonServiceState = PokemonServiceState.loading;
     try {
-      await _fetchPokemonsByNames(pokemonsNames: pokemonsNames);
+      //Filtramos pokemones
+      await _filterPokemons();
 
-      // Ordenar la lista por ID
-      void sortAndConvertListToSet(List<PokemonModel?> list) {
-          list.sort((a, b) => a!.id!.compareTo(b!.id!));
-      }
-      final List<PokemonModel?> pokemonsList = pokemons.toList();
-      final List<PokemonModel?> filteredPokemonsList = filteredPokemons.toList();
-      sortAndConvertListToSet(pokemonsList);
-      sortAndConvertListToSet(filteredPokemonsList);
-      pokemons = Set<PokemonModel?>.from(pokemonsList);
-      filteredPokemons = Set<PokemonModel?>.from(filteredPokemonsList);
-
-      allDataFetched = pokemons.length == allPokemonsName.length;
-
+      await success();
       pokemonServiceState = PokemonServiceState.success;
-    } catch (e) {
+    }
+    catch (e) {
       print(e);
       pokemonServiceState = PokemonServiceState.error;
     }
   }
-
+  
   Future<void> _fetchAllPokemonsName() async {
     List<String> generation1PokemonsName = await pokemonService.fetchPokemonsNameByGeneration(generationId: 1);
     List<String> generation2PokemonsName = await pokemonService.fetchPokemonsNameByGeneration(generationId: 2);
@@ -104,7 +93,7 @@ abstract class HomeViewModelBase with Store {
     allPokemonsName.addAll(generation2PokemonsName);
   }
 
-  Future<void> _fetchAllPokemons() async {
+  Future<void> _fetchAllPokemonsWithPagination() async {
     // Verificar que el offset no superen los límites de la lista.
     if (offset >= allPokemonsName.length) {
       offset = allPokemonsName.length;
@@ -118,7 +107,7 @@ abstract class HomeViewModelBase with Store {
     final List<String> paginatedPokemonsName = allPokemonsName.toList().sublist(offset, offset + newlimit);
     offset += currentLimit;
 
-    //Obtener pokemones por nombre y quitar los existentes
+    //Obtener los pokemones que aun no se han consumido
     final List<Future<PokemonModel?>> allFuturePokemons = paginatedPokemonsName
       .where((name) => !pokemons.any(
         (pokemon) => pokemon!.name == name
@@ -128,20 +117,74 @@ abstract class HomeViewModelBase with Store {
     //Agregar pokemones a la lista de pokemones
     final List<PokemonModel?> pokemonsList = await Future.wait(allFuturePokemons);
     pokemons.addAll(pokemonsList);
-    filteredPokemons.addAll(pokemonsList);
   }
 
   Future<void> _fetchPokemonsByNames({required List<String> pokemonsNames}) async{
-    //Obtener pokemones por nombre y quitar los existentes
+    //Obtener pokemones
     final List<Future<PokemonModel?>> allFuturePokemons = pokemonsNames
-      .where((name) => !pokemons.any(
-        (pokemon) => pokemon!.name == name
-      ))
-      .map((name) => pokemonService.fetchPokemonByName(pokemonName: name)).toList();
+      .map(
+        (name) => pokemonService.fetchPokemonByName(pokemonName: name)
+      ).toList();
     
     //Agregar pokemones a la lista de pokemones
     final List<PokemonModel?> pokemonsList = await Future.wait(allFuturePokemons);
     pokemons.addAll(pokemonsList);
-    filteredPokemons.addAll(pokemonsList);
+  }
+
+  Future<void> _filterPokemons() async{
+    filteredPokemons = {};
+    if (searchText.isNotEmpty) {
+      //Obtener nombres de pokemones que satisfagan al busqueda aun sin consumir de la api
+      final filteredNoFetchedPokemonsName = allPokemonsName
+        .where(
+          (name) => name.toLowerCase().contains(searchText.toLowerCase())
+        )
+        .where(
+          (name) => !pokemons.any(
+            (pokemon) => pokemon!.name!.toLowerCase() == name.toLowerCase()
+          )
+        ).toList();
+      
+      //Si hay pokemones sin consumir los consumimos de la api
+      if (filteredNoFetchedPokemonsName.isNotEmpty){
+        await _fetchPokemonsByNames(pokemonsNames: filteredNoFetchedPokemonsName);
+      }
+
+      //Agregamos los pokemones filtrados a la lista de filtrados
+      filteredPokemons.addAll(pokemons
+        .where((pokemon) => pokemon!.name!
+          .toLowerCase()
+          .contains(searchText.toLowerCase())
+        ).toSet());
+    }
+    else{
+      //No hay filtro
+      filteredPokemons = pokemons;
+    }
+
+    //Primera Carga
+    if(isFirstLoad){
+      filteredPokemons = pokemons;
+      isFirstLoad = false;
+    }
+  }
+
+  Future<void> success() async{
+    // Ordenar la lista por ID
+    void sortAndConvertListToSet(List<PokemonModel?> list) {
+      list.sort((a, b) => a!.id!.compareTo(b!.id!));
+    }
+    final List<PokemonModel?> pokemonsList = pokemons.toList();
+    final List<PokemonModel?> filteredPokemonsList = filteredPokemons.toList();
+    sortAndConvertListToSet(pokemonsList);
+    sortAndConvertListToSet(filteredPokemonsList);
+    pokemons = Set<PokemonModel?>.from(pokemonsList);
+    filteredPokemons = Set<PokemonModel?>.from(filteredPokemonsList);
+
+    //Hemos consumido todos pokemones
+    allDataFetched = pokemons.length == allPokemonsName.length;
+
+    //Los pokemones estan filtrados
+    isFiltered = filteredPokemons.length < pokemons.length;
   }
 }
