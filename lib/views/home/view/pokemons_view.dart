@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
@@ -5,20 +7,25 @@ import '../../../core/widgets/pokemon_list_view.dart';
 import '../../../core/widgets/pokemon_type_filter_dialog.dart';
 import '../viewModel/home_view_model.dart';
 
-class PokemonsView extends StatelessWidget {
+class PokemonsView extends StatefulWidget {
   const PokemonsView({
     super.key,
     this.scrollController,
-    required this.searchController,
     required this.homeViewModel,
     this.isLoading = false,
   });
 
   final ScrollController? scrollController;
-  final TextEditingController searchController;
   final HomeViewModel homeViewModel;
   final bool isLoading;
 
+  @override
+  State<PokemonsView> createState() => _PokemonsViewState();
+}
+
+class _PokemonsViewState extends State<PokemonsView> {
+  Timer? _debounce;
+  
   @override
   Widget build(BuildContext context) {
     return _buildMainHomeView();
@@ -40,7 +47,7 @@ class PokemonsView extends StatelessWidget {
             ),
             title: Row(
               children: [
-                isLoading 
+                widget.isLoading 
                 ? Container(
                   padding: const EdgeInsets.only(right: 5),
                   child: const PokeballProgressIndicator(
@@ -52,8 +59,7 @@ class PokemonsView extends StatelessWidget {
                 : Container(),
                 Expanded(
                   child: TextField(
-                    enabled: !isLoading,
-                    controller: searchController,
+                    enabled: !widget.isLoading,
                     style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
                     decoration: const InputDecoration(
@@ -61,6 +67,14 @@ class PokemonsView extends StatelessWidget {
                       hintStyle: TextStyle(color: Colors.white54),
                       border: InputBorder.none,
                     ),
+                    onChanged: (value) {
+                      if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                      _debounce = Timer(const Duration(milliseconds: 500), () {
+                        widget.homeViewModel.searchText = value;
+                        widget.homeViewModel.filterPokemonsService();
+                      });
+                    },
                   ),
                 ),
                 IconButton(
@@ -68,7 +82,7 @@ class PokemonsView extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (_) => PokemonTypeFilterDialog(homeViewModel: homeViewModel),
+                      builder: (_) => PokemonTypeFilterDialog(homeViewModel: widget.homeViewModel),
                     );
                   },
                 ),
@@ -83,13 +97,13 @@ class PokemonsView extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: PokemonListView(
-                      pokemonsList: homeViewModel.filteredPokemons.toList(),
-                      scrollController: scrollController,
+                      pokemonsList: widget.homeViewModel.filteredPokemons.toList(),
+                      scrollController: widget.scrollController,
                     ),
                   ),
                 ),
               ),
-              if (isLoading)
+              if (widget.isLoading)
                 const Padding(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   child: Center(

@@ -53,5 +53,4 @@ const _$PokemonTypesEnumMap = {
   PokemonTypes.steel: 'steel',
   PokemonTypes.dark: 'dark',
   PokemonTypes.fairy: 'fairy',
-  PokemonTypes.stellar: 'stellar',
 };

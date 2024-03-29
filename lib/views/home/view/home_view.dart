@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -21,8 +19,6 @@ class _HomeViewState extends State<HomeView> {
   final HomeViewModel _homeViewModel = HomeViewModel(PokemonService(DioManager.instance.dio));
 
   final ScrollController _scrollController = ScrollController();
-  final TextEditingController _searchController = TextEditingController();
-  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -31,26 +27,11 @@ class _HomeViewState extends State<HomeView> {
 
     //Paginacion
     _scrollController.addListener(getPaginatedPokemons);
-
-    //Buscador
-    _searchController.addListener(() {
-      // Cancelar el temporizador anterior si existe
-      if (_debounceTimer != null && _debounceTimer!.isActive) {
-        _debounceTimer!.cancel();
-      }
-
-      // Configurar un nuevo temporizador de debouncing
-      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-        _homeViewModel.searchText = _searchController.text;
-        _homeViewModel.filterPokemonsService();
-      });
-    });
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _searchController.dispose();
 
     super.dispose();
   }
@@ -95,14 +76,12 @@ class _HomeViewState extends State<HomeView> {
               );
             } else {
               return PokemonsView(
-                searchController: _searchController,
                 homeViewModel: _homeViewModel,
                 isLoading: true,
               );
             }
           case PokemonServiceState.success:
             return PokemonsView(
-              searchController: _searchController,
               homeViewModel: _homeViewModel,
               scrollController: _scrollController,
             );

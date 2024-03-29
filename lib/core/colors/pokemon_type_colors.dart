@@ -21,5 +21,4 @@ final Map<PokemonTypes, List<Color>> pokemonTypeColors = {
   PokemonTypes.steel: [Colors.blueGrey, Colors.blueGrey[300]!],
   PokemonTypes.dark: [Colors.brown[800]!, Colors.black],
   PokemonTypes.fairy: [Colors.pink[300]!, Colors.pink[100]!],
-  PokemonTypes.stellar: [Colors.indigo[300]!, Colors.indigo[100]!],
 };

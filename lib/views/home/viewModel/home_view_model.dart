@@ -61,7 +61,7 @@ abstract class HomeViewModelBase with Store {
       //Filtramos pokemones
       await _filterPokemons();
 
-      await success();
+      await _success();
       pokemonServiceState = PokemonServiceState.success;
     } catch (e) {
       print(e);
@@ -76,7 +76,7 @@ abstract class HomeViewModelBase with Store {
       //Filtramos pokemones
       await _filterPokemons();
 
-      await success();
+      await _success();
       pokemonServiceState = PokemonServiceState.success;
     }
     catch (e) {
@@ -134,7 +134,7 @@ abstract class HomeViewModelBase with Store {
   Future<void> _filterPokemons() async{
     filteredPokemons = {};
     if (searchText.isNotEmpty) {
-      //Obtener nombres de pokemones que satisfagan al busqueda aun sin consumir de la api
+      //Obtener nombres de pokemones que satisfagan la busqueda aun sin consumir de la api
       final filteredNoFetchedPokemonsName = allPokemonsName
         .where(
           (name) => name.toLowerCase().contains(searchText.toLowerCase())
@@ -149,17 +149,47 @@ abstract class HomeViewModelBase with Store {
       if (filteredNoFetchedPokemonsName.isNotEmpty){
         await _fetchPokemonsByNames(pokemonsNames: filteredNoFetchedPokemonsName);
       }
-
-      //Agregamos los pokemones filtrados a la lista de filtrados
-      filteredPokemons.addAll(pokemons
-        .where((pokemon) => pokemon!.name!
-          .toLowerCase()
-          .contains(searchText.toLowerCase())
-        ).toSet());
     }
-    else{
+
+    if(selectedPokemonTypes.isNotEmpty){
+      List<String> pokemonsName = [];
+      //Obtenemos nombres de pokemones por tipo
+      for (var type in selectedPokemonTypes) {
+        pokemonsName.addAll(await pokemonService.fetchPokemonsNameByType(pokemonType: type));
+      }
+
+      //Obtener nombres de pokemones que si esten dentro de mi lista allPokemonsName
+      final List<String> filteredPokemonsName = allPokemonsName.where((name) => pokemonsName.contains(name)).toList();
+      
+      //Obtener nombres de pokemones que satisfagan la busqueda aun sin consumir de la api
+      final List<String> filteredNoFetchedPokemonsName = filteredPokemonsName
+        .where(
+          (name) => name.toLowerCase().contains(searchText.toLowerCase())
+        )
+        .where(
+          (name) => !pokemons.any(
+            (pokemon) => pokemon!.name!.toLowerCase() == name.toLowerCase()
+          )
+        ).toList();
+      
+      //Si hay pokemones sin consumir los consumimos de la api
+      if (filteredNoFetchedPokemonsName.isNotEmpty){
+        await _fetchPokemonsByNames(pokemonsNames: filteredNoFetchedPokemonsName);
+      }
+    }
+
+    if(searchText.isEmpty && selectedPokemonTypes.isEmpty){
       //No hay filtro
       filteredPokemons = pokemons;
+    }
+    else{
+      //Agregamos los pokemones filtrados a la lista de filtrados
+      filteredPokemons.addAll(pokemons
+        .where((pokemon) => 
+          pokemon!.name!.toLowerCase().contains(searchText.toLowerCase()) 
+          && selectedPokemonTypes.every((type) => pokemon.types!.contains(type))
+        )
+      );
     }
 
     //Primera Carga
@@ -169,7 +199,7 @@ abstract class HomeViewModelBase with Store {
     }
   }
 
-  Future<void> success() async{
+  Future<void> _success() async{
     // Ordenar la lista por ID
     void sortAndConvertListToSet(List<PokemonModel?> list) {
       list.sort((a, b) => a!.id!.compareTo(b!.id!));

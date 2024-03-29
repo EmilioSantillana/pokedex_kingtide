@@ -21,8 +21,7 @@ enum PokemonTypes {
   dragon,
   steel,
   dark,
-  fairy,
-  stellar
+  fairy
 }
 
 @freezed
