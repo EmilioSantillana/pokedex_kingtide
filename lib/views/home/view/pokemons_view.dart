@@ -59,7 +59,6 @@ class _PokemonsViewState extends State<PokemonsView> {
                 : Container(),
                 Expanded(
                   child: TextField(
-                    enabled: !widget.isLoading,
                     style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
                     decoration: const InputDecoration(

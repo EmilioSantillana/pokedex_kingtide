@@ -89,8 +89,8 @@ class PokemonTypeFilterDialogState extends State<PokemonTypeFilterDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () async {
-            await widget.homeViewModel.filterPokemonsService();
+          onPressed: () {
+            widget.homeViewModel.filterPokemonsService();
             if(context.mounted) Navigator.of(context).pop();
           },
           child: const GradientText(
