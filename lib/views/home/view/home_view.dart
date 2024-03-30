@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/network/dio_manager.dart';
 import '../../../core/services/pokemon_service.dart';
+import '../../../core/services/pokemon_service_state.dart';
 import '../../../core/widgets/gradient_text.dart';
 import '../../../core/widgets/pokeball_progress_indicator.dart';
 import '../viewModel/home_view_model.dart';

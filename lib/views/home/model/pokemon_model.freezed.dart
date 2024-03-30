@@ -27,11 +27,37 @@ mixin _$PokemonModel {
   int? get weight => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_experience')
   int? get baseExperience => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_hp')
+  int? get baseStat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_attack')
+  int? get baseAttack => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_defense')
+  int? get baseDefense => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_special_attack')
+  int? get baseSpecialAttack => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_special_defense')
+  int? get baseSpecialDefense => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_speed')
+  int? get baseSpeed => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_default')
   bool? get isDefault => throw _privateConstructorUsedError;
   @JsonKey(name: 'svg_url')
   String? get svgUrl => throw _privateConstructorUsedError;
   Set<PokemonTypes>? get types => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_happiness')
+  int? get baseHappiness => throw _privateConstructorUsedError;
+  @JsonKey(name: 'capture_rate')
+  int? get captureRate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_baby')
+  bool? get isBaby => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_legendary')
+  bool? get isLegendary => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_mythical')
+  bool? get isMythical => throw _privateConstructorUsedError;
+  @JsonKey(name: 'evolution_id')
+  int? get evolutionId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pokemon_evolutions')
+  Set<String>? get pokemonEvolutions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,9 +78,22 @@ abstract class $PokemonModelCopyWith<$Res> {
       int? height,
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
+      @JsonKey(name: 'base_hp') int? baseStat,
+      @JsonKey(name: 'base_attack') int? baseAttack,
+      @JsonKey(name: 'base_defense') int? baseDefense,
+      @JsonKey(name: 'base_special_attack') int? baseSpecialAttack,
+      @JsonKey(name: 'base_special_defense') int? baseSpecialDefense,
+      @JsonKey(name: 'base_speed') int? baseSpeed,
       @JsonKey(name: 'is_default') bool? isDefault,
       @JsonKey(name: 'svg_url') String? svgUrl,
-      Set<PokemonTypes>? types});
+      Set<PokemonTypes>? types,
+      @JsonKey(name: 'base_happiness') int? baseHappiness,
+      @JsonKey(name: 'capture_rate') int? captureRate,
+      @JsonKey(name: 'is_baby') bool? isBaby,
+      @JsonKey(name: 'is_legendary') bool? isLegendary,
+      @JsonKey(name: 'is_mythical') bool? isMythical,
+      @JsonKey(name: 'evolution_id') int? evolutionId,
+      @JsonKey(name: 'pokemon_evolutions') Set<String>? pokemonEvolutions});
 }
 
 /// @nodoc
@@ -76,9 +115,22 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
     Object? height = freezed,
     Object? weight = freezed,
     Object? baseExperience = freezed,
+    Object? baseStat = freezed,
+    Object? baseAttack = freezed,
+    Object? baseDefense = freezed,
+    Object? baseSpecialAttack = freezed,
+    Object? baseSpecialDefense = freezed,
+    Object? baseSpeed = freezed,
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
     Object? types = freezed,
+    Object? baseHappiness = freezed,
+    Object? captureRate = freezed,
+    Object? isBaby = freezed,
+    Object? isLegendary = freezed,
+    Object? isMythical = freezed,
+    Object? evolutionId = freezed,
+    Object? pokemonEvolutions = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -105,6 +157,30 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.baseExperience
           : baseExperience // ignore: cast_nullable_to_non_nullable
               as int?,
+      baseStat: freezed == baseStat
+          ? _value.baseStat
+          : baseStat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseAttack: freezed == baseAttack
+          ? _value.baseAttack
+          : baseAttack // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseDefense: freezed == baseDefense
+          ? _value.baseDefense
+          : baseDefense // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpecialAttack: freezed == baseSpecialAttack
+          ? _value.baseSpecialAttack
+          : baseSpecialAttack // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpecialDefense: freezed == baseSpecialDefense
+          ? _value.baseSpecialDefense
+          : baseSpecialDefense // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpeed: freezed == baseSpeed
+          ? _value.baseSpeed
+          : baseSpeed // ignore: cast_nullable_to_non_nullable
+              as int?,
       isDefault: freezed == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
@@ -117,6 +193,34 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
               as Set<PokemonTypes>?,
+      baseHappiness: freezed == baseHappiness
+          ? _value.baseHappiness
+          : baseHappiness // ignore: cast_nullable_to_non_nullable
+              as int?,
+      captureRate: freezed == captureRate
+          ? _value.captureRate
+          : captureRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isBaby: freezed == isBaby
+          ? _value.isBaby
+          : isBaby // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isLegendary: freezed == isLegendary
+          ? _value.isLegendary
+          : isLegendary // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isMythical: freezed == isMythical
+          ? _value.isMythical
+          : isMythical // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      evolutionId: freezed == evolutionId
+          ? _value.evolutionId
+          : evolutionId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pokemonEvolutions: freezed == pokemonEvolutions
+          ? _value.pokemonEvolutions
+          : pokemonEvolutions // ignore: cast_nullable_to_non_nullable
+              as Set<String>?,
     ) as $Val);
   }
 }
@@ -136,9 +240,22 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       int? height,
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
+      @JsonKey(name: 'base_hp') int? baseStat,
+      @JsonKey(name: 'base_attack') int? baseAttack,
+      @JsonKey(name: 'base_defense') int? baseDefense,
+      @JsonKey(name: 'base_special_attack') int? baseSpecialAttack,
+      @JsonKey(name: 'base_special_defense') int? baseSpecialDefense,
+      @JsonKey(name: 'base_speed') int? baseSpeed,
       @JsonKey(name: 'is_default') bool? isDefault,
       @JsonKey(name: 'svg_url') String? svgUrl,
-      Set<PokemonTypes>? types});
+      Set<PokemonTypes>? types,
+      @JsonKey(name: 'base_happiness') int? baseHappiness,
+      @JsonKey(name: 'capture_rate') int? captureRate,
+      @JsonKey(name: 'is_baby') bool? isBaby,
+      @JsonKey(name: 'is_legendary') bool? isLegendary,
+      @JsonKey(name: 'is_mythical') bool? isMythical,
+      @JsonKey(name: 'evolution_id') int? evolutionId,
+      @JsonKey(name: 'pokemon_evolutions') Set<String>? pokemonEvolutions});
 }
 
 /// @nodoc
@@ -158,9 +275,22 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? weight = freezed,
     Object? baseExperience = freezed,
+    Object? baseStat = freezed,
+    Object? baseAttack = freezed,
+    Object? baseDefense = freezed,
+    Object? baseSpecialAttack = freezed,
+    Object? baseSpecialDefense = freezed,
+    Object? baseSpeed = freezed,
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
     Object? types = freezed,
+    Object? baseHappiness = freezed,
+    Object? captureRate = freezed,
+    Object? isBaby = freezed,
+    Object? isLegendary = freezed,
+    Object? isMythical = freezed,
+    Object? evolutionId = freezed,
+    Object? pokemonEvolutions = freezed,
   }) {
     return _then(_$PokemonModelImpl(
       id: freezed == id
@@ -187,6 +317,30 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value.baseExperience
           : baseExperience // ignore: cast_nullable_to_non_nullable
               as int?,
+      baseStat: freezed == baseStat
+          ? _value.baseStat
+          : baseStat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseAttack: freezed == baseAttack
+          ? _value.baseAttack
+          : baseAttack // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseDefense: freezed == baseDefense
+          ? _value.baseDefense
+          : baseDefense // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpecialAttack: freezed == baseSpecialAttack
+          ? _value.baseSpecialAttack
+          : baseSpecialAttack // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpecialDefense: freezed == baseSpecialDefense
+          ? _value.baseSpecialDefense
+          : baseSpecialDefense // ignore: cast_nullable_to_non_nullable
+              as int?,
+      baseSpeed: freezed == baseSpeed
+          ? _value.baseSpeed
+          : baseSpeed // ignore: cast_nullable_to_non_nullable
+              as int?,
       isDefault: freezed == isDefault
           ? _value.isDefault
           : isDefault // ignore: cast_nullable_to_non_nullable
@@ -199,6 +353,34 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
               as Set<PokemonTypes>?,
+      baseHappiness: freezed == baseHappiness
+          ? _value.baseHappiness
+          : baseHappiness // ignore: cast_nullable_to_non_nullable
+              as int?,
+      captureRate: freezed == captureRate
+          ? _value.captureRate
+          : captureRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isBaby: freezed == isBaby
+          ? _value.isBaby
+          : isBaby // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isLegendary: freezed == isLegendary
+          ? _value.isLegendary
+          : isLegendary // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isMythical: freezed == isMythical
+          ? _value.isMythical
+          : isMythical // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      evolutionId: freezed == evolutionId
+          ? _value.evolutionId
+          : evolutionId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pokemonEvolutions: freezed == pokemonEvolutions
+          ? _value._pokemonEvolutions
+          : pokemonEvolutions // ignore: cast_nullable_to_non_nullable
+              as Set<String>?,
     ));
   }
 }
@@ -213,10 +395,25 @@ class _$PokemonModelImpl implements _PokemonModel {
       this.height,
       this.weight,
       @JsonKey(name: 'base_experience') this.baseExperience,
+      @JsonKey(name: 'base_hp') this.baseStat,
+      @JsonKey(name: 'base_attack') this.baseAttack,
+      @JsonKey(name: 'base_defense') this.baseDefense,
+      @JsonKey(name: 'base_special_attack') this.baseSpecialAttack,
+      @JsonKey(name: 'base_special_defense') this.baseSpecialDefense,
+      @JsonKey(name: 'base_speed') this.baseSpeed,
       @JsonKey(name: 'is_default') this.isDefault,
       @JsonKey(name: 'svg_url') this.svgUrl,
-      final Set<PokemonTypes>? types})
-      : _types = types;
+      final Set<PokemonTypes>? types,
+      @JsonKey(name: 'base_happiness') this.baseHappiness,
+      @JsonKey(name: 'capture_rate') this.captureRate,
+      @JsonKey(name: 'is_baby') this.isBaby,
+      @JsonKey(name: 'is_legendary') this.isLegendary,
+      @JsonKey(name: 'is_mythical') this.isMythical,
+      @JsonKey(name: 'evolution_id') this.evolutionId,
+      @JsonKey(name: 'pokemon_evolutions')
+      final Set<String>? pokemonEvolutions})
+      : _types = types,
+        _pokemonEvolutions = pokemonEvolutions;
 
   factory _$PokemonModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PokemonModelImplFromJson(json);
@@ -235,6 +432,24 @@ class _$PokemonModelImpl implements _PokemonModel {
   @JsonKey(name: 'base_experience')
   final int? baseExperience;
   @override
+  @JsonKey(name: 'base_hp')
+  final int? baseStat;
+  @override
+  @JsonKey(name: 'base_attack')
+  final int? baseAttack;
+  @override
+  @JsonKey(name: 'base_defense')
+  final int? baseDefense;
+  @override
+  @JsonKey(name: 'base_special_attack')
+  final int? baseSpecialAttack;
+  @override
+  @JsonKey(name: 'base_special_defense')
+  final int? baseSpecialDefense;
+  @override
+  @JsonKey(name: 'base_speed')
+  final int? baseSpeed;
+  @override
   @JsonKey(name: 'is_default')
   final bool? isDefault;
   @override
@@ -251,8 +466,38 @@ class _$PokemonModelImpl implements _PokemonModel {
   }
 
   @override
+  @JsonKey(name: 'base_happiness')
+  final int? baseHappiness;
+  @override
+  @JsonKey(name: 'capture_rate')
+  final int? captureRate;
+  @override
+  @JsonKey(name: 'is_baby')
+  final bool? isBaby;
+  @override
+  @JsonKey(name: 'is_legendary')
+  final bool? isLegendary;
+  @override
+  @JsonKey(name: 'is_mythical')
+  final bool? isMythical;
+  @override
+  @JsonKey(name: 'evolution_id')
+  final int? evolutionId;
+  final Set<String>? _pokemonEvolutions;
+  @override
+  @JsonKey(name: 'pokemon_evolutions')
+  Set<String>? get pokemonEvolutions {
+    final value = _pokemonEvolutions;
+    if (value == null) return null;
+    if (_pokemonEvolutions is EqualUnmodifiableSetView)
+      return _pokemonEvolutions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(value);
+  }
+
+  @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, isDefault: $isDefault, svgUrl: $svgUrl, types: $types)';
+    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, baseStat: $baseStat, baseAttack: $baseAttack, baseDefense: $baseDefense, baseSpecialAttack: $baseSpecialAttack, baseSpecialDefense: $baseSpecialDefense, baseSpeed: $baseSpeed, isDefault: $isDefault, svgUrl: $svgUrl, types: $types, baseHappiness: $baseHappiness, captureRate: $captureRate, isBaby: $isBaby, isLegendary: $isLegendary, isMythical: $isMythical, evolutionId: $evolutionId, pokemonEvolutions: $pokemonEvolutions)';
   }
 
   @override
@@ -267,25 +512,64 @@ class _$PokemonModelImpl implements _PokemonModel {
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.baseExperience, baseExperience) ||
                 other.baseExperience == baseExperience) &&
+            (identical(other.baseStat, baseStat) ||
+                other.baseStat == baseStat) &&
+            (identical(other.baseAttack, baseAttack) ||
+                other.baseAttack == baseAttack) &&
+            (identical(other.baseDefense, baseDefense) ||
+                other.baseDefense == baseDefense) &&
+            (identical(other.baseSpecialAttack, baseSpecialAttack) ||
+                other.baseSpecialAttack == baseSpecialAttack) &&
+            (identical(other.baseSpecialDefense, baseSpecialDefense) ||
+                other.baseSpecialDefense == baseSpecialDefense) &&
+            (identical(other.baseSpeed, baseSpeed) ||
+                other.baseSpeed == baseSpeed) &&
             (identical(other.isDefault, isDefault) ||
                 other.isDefault == isDefault) &&
             (identical(other.svgUrl, svgUrl) || other.svgUrl == svgUrl) &&
-            const DeepCollectionEquality().equals(other._types, _types));
+            const DeepCollectionEquality().equals(other._types, _types) &&
+            (identical(other.baseHappiness, baseHappiness) ||
+                other.baseHappiness == baseHappiness) &&
+            (identical(other.captureRate, captureRate) ||
+                other.captureRate == captureRate) &&
+            (identical(other.isBaby, isBaby) || other.isBaby == isBaby) &&
+            (identical(other.isLegendary, isLegendary) ||
+                other.isLegendary == isLegendary) &&
+            (identical(other.isMythical, isMythical) ||
+                other.isMythical == isMythical) &&
+            (identical(other.evolutionId, evolutionId) ||
+                other.evolutionId == evolutionId) &&
+            const DeepCollectionEquality()
+                .equals(other._pokemonEvolutions, _pokemonEvolutions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      order,
-      height,
-      weight,
-      baseExperience,
-      isDefault,
-      svgUrl,
-      const DeepCollectionEquality().hash(_types));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        name,
+        order,
+        height,
+        weight,
+        baseExperience,
+        baseStat,
+        baseAttack,
+        baseDefense,
+        baseSpecialAttack,
+        baseSpecialDefense,
+        baseSpeed,
+        isDefault,
+        svgUrl,
+        const DeepCollectionEquality().hash(_types),
+        baseHappiness,
+        captureRate,
+        isBaby,
+        isLegendary,
+        isMythical,
+        evolutionId,
+        const DeepCollectionEquality().hash(_pokemonEvolutions)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -309,9 +593,23 @@ abstract class _PokemonModel implements PokemonModel {
       final int? height,
       final int? weight,
       @JsonKey(name: 'base_experience') final int? baseExperience,
+      @JsonKey(name: 'base_hp') final int? baseStat,
+      @JsonKey(name: 'base_attack') final int? baseAttack,
+      @JsonKey(name: 'base_defense') final int? baseDefense,
+      @JsonKey(name: 'base_special_attack') final int? baseSpecialAttack,
+      @JsonKey(name: 'base_special_defense') final int? baseSpecialDefense,
+      @JsonKey(name: 'base_speed') final int? baseSpeed,
       @JsonKey(name: 'is_default') final bool? isDefault,
       @JsonKey(name: 'svg_url') final String? svgUrl,
-      final Set<PokemonTypes>? types}) = _$PokemonModelImpl;
+      final Set<PokemonTypes>? types,
+      @JsonKey(name: 'base_happiness') final int? baseHappiness,
+      @JsonKey(name: 'capture_rate') final int? captureRate,
+      @JsonKey(name: 'is_baby') final bool? isBaby,
+      @JsonKey(name: 'is_legendary') final bool? isLegendary,
+      @JsonKey(name: 'is_mythical') final bool? isMythical,
+      @JsonKey(name: 'evolution_id') final int? evolutionId,
+      @JsonKey(name: 'pokemon_evolutions')
+      final Set<String>? pokemonEvolutions}) = _$PokemonModelImpl;
 
   factory _PokemonModel.fromJson(Map<String, dynamic> json) =
       _$PokemonModelImpl.fromJson;
@@ -330,6 +628,24 @@ abstract class _PokemonModel implements PokemonModel {
   @JsonKey(name: 'base_experience')
   int? get baseExperience;
   @override
+  @JsonKey(name: 'base_hp')
+  int? get baseStat;
+  @override
+  @JsonKey(name: 'base_attack')
+  int? get baseAttack;
+  @override
+  @JsonKey(name: 'base_defense')
+  int? get baseDefense;
+  @override
+  @JsonKey(name: 'base_special_attack')
+  int? get baseSpecialAttack;
+  @override
+  @JsonKey(name: 'base_special_defense')
+  int? get baseSpecialDefense;
+  @override
+  @JsonKey(name: 'base_speed')
+  int? get baseSpeed;
+  @override
   @JsonKey(name: 'is_default')
   bool? get isDefault;
   @override
@@ -337,6 +653,27 @@ abstract class _PokemonModel implements PokemonModel {
   String? get svgUrl;
   @override
   Set<PokemonTypes>? get types;
+  @override
+  @JsonKey(name: 'base_happiness')
+  int? get baseHappiness;
+  @override
+  @JsonKey(name: 'capture_rate')
+  int? get captureRate;
+  @override
+  @JsonKey(name: 'is_baby')
+  bool? get isBaby;
+  @override
+  @JsonKey(name: 'is_legendary')
+  bool? get isLegendary;
+  @override
+  @JsonKey(name: 'is_mythical')
+  bool? get isMythical;
+  @override
+  @JsonKey(name: 'evolution_id')
+  int? get evolutionId;
+  @override
+  @JsonKey(name: 'pokemon_evolutions')
+  Set<String>? get pokemonEvolutions;
   @override
   @JsonKey(ignore: true)
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>

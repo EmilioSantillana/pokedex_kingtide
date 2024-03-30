@@ -8,6 +8,7 @@ abstract class IPokemonService {
 
   Future<List<String>> fetchPokemonsNameByGeneration({required int generationId,});
   Future<List<String>> fetchPokemonsNameByType({required PokemonTypes pokemonType});
-  Future<PokemonModel?> fetchPokemonById({required int pokemonId});
   Future<PokemonModel?> fetchPokemonByName({required String pokemonName});
+  Future<PokemonModel?> fetchPokemonSpecieById({required int pokemonId});
+  Future<PokemonModel?> fetchPokemonEvolutionChainById({required int evolutionId});
 }

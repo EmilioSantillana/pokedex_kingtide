@@ -58,15 +58,21 @@ class PokemonService extends IPokemonService {
   }
 
   @override
-  Future<PokemonModel?> fetchPokemonById({required int pokemonId}) async {
-    final response = await dio.get('pokemon/$pokemonId/');
+  Future<PokemonModel?> fetchPokemonByName({required String pokemonName}) async {
+    final response = await dio.get('pokemon/$pokemonName/');
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data as Map<String, dynamic>;
 
       data['svg_url'] = data['sprites']['other']['dream_world']['front_default'];
-      
-      List<String> typeNames = data['types'].map<String>((type) => type['type']['name'] as String).toList();
-      data['types'] = typeNames;
+
+      data['base_hp'] = data['stats'][0]['base_stat'];
+      data['base_attack'] = data['stats'][1]['base_stat'];
+      data['base_defense'] = data['stats'][2]['base_stat'];
+      data['base_special_attack'] = data['stats'][3]['base_stat'];
+      data['base_special_defense'] = data['stats'][4]['base_stat'];
+      data['base_speed'] = data['stats'][5]['base_stat'];
+
+      data['types'] = data['types'].map<String>((type) => type['type']['name'] as String).toList();
 
       PokemonModel pokemon = PokemonModel.fromJson(data);
       return pokemon;
@@ -75,15 +81,44 @@ class PokemonService extends IPokemonService {
   }
 
   @override
-  Future<PokemonModel?> fetchPokemonByName({required String pokemonName}) async {
-    final response = await dio.get('pokemon/$pokemonName/');
+  Future<PokemonModel?> fetchPokemonSpecieById({required int pokemonId}) async {
+    final response = await dio.get('pokemon-species/$pokemonId/');
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data as Map<String, dynamic>;
 
-      data['svg_url'] = data['sprites']['other']['dream_world']['front_default'];
+      //Función para extraer el ID de la URL
+      int getIdFromUrl(String url) {
+        final parts = url.split('/');
+        return int.tryParse(parts[parts.length - 2]) ?? 0;
+      }
+      data['evolution_id'] = getIdFromUrl(data['evolution_chain']['url']);
 
-      List<String> typeNames = data['types'].map<String>((type) => type['type']['name'] as String).toList();
-      data['types'] = typeNames;
+      PokemonModel pokemon = PokemonModel.fromJson(data);
+      return pokemon;
+    }
+    return null;
+  }
+
+  @override
+  Future<PokemonModel?> fetchPokemonEvolutionChainById({required int evolutionId}) async {
+    final response = await dio.get('evolution-chain/$evolutionId/');
+    if (response.statusCode == HttpStatus.ok) {
+      var data = response.data as Map<String, dynamic>;
+
+      List<String> getEvolutions(Map<String, dynamic> chain) {
+        List<String> evolutions = [];
+        if (chain.containsKey('species')) {
+          evolutions.add(chain['species']['name']);
+        }
+        if (chain.containsKey('evolves_to')) {
+          for (var evolve in chain['evolves_to']) {
+            evolutions.addAll(getEvolutions(evolve));
+          }
+        }
+        return evolutions;
+      }
+      data['pokemon_evolutions'] = getEvolutions(data['chain']).toList();
+      data.remove('id');
 
       PokemonModel pokemon = PokemonModel.fromJson(data);
       return pokemon;

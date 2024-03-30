@@ -1,11 +1,10 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../core/services/i_pokemon_service.dart';
+import '../../../core/services/pokemon_service_state.dart';
 import '../model/pokemon_model.dart';
 
 part 'home_view_model.g.dart';
-
-enum PokemonServiceState { loading, error, success, normal }
 
 class HomeViewModel = HomeViewModelBase with _$HomeViewModel;
 
