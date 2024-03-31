@@ -43,6 +43,7 @@ class PokemonModel with _$PokemonModel {
     @JsonKey(name: 'svg_url') String? svgUrl,
     Set<PokemonTypes>? types,
 
+    @JsonKey(name: 'flavor_text') String? flavorText,
     @JsonKey(name: 'base_happiness') int? baseHappiness,
     @JsonKey(name: 'capture_rate') int? captureRate,
     @JsonKey(name: 'is_baby') bool? isBaby,
@@ -72,6 +73,7 @@ extension PokemonModelExtension on PokemonModel {
         isDefault != null &&
         svgUrl != null &&
         types != null &&
+        flavorText != null &&
         baseHappiness != null &&
         captureRate != null &&
         isBaby != null &&
@@ -98,6 +100,7 @@ extension PokemonModelExtension on PokemonModel {
       isDefault: other.isDefault ?? isDefault,
       svgUrl: other.svgUrl ?? svgUrl,
       types: other.types ?? types,
+      flavorText: other.flavorText ?? flavorText,
       baseHappiness: other.baseHappiness ?? baseHappiness,
       captureRate: other.captureRate ?? captureRate,
       isBaby: other.isBaby ?? isBaby,

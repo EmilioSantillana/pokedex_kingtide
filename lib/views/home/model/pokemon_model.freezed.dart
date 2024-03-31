@@ -44,6 +44,8 @@ mixin _$PokemonModel {
   @JsonKey(name: 'svg_url')
   String? get svgUrl => throw _privateConstructorUsedError;
   Set<PokemonTypes>? get types => throw _privateConstructorUsedError;
+  @JsonKey(name: 'flavor_text')
+  String? get flavorText => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_happiness')
   int? get baseHappiness => throw _privateConstructorUsedError;
   @JsonKey(name: 'capture_rate')
@@ -88,6 +90,7 @@ abstract class $PokemonModelCopyWith<$Res> {
       @JsonKey(name: 'is_default') bool? isDefault,
       @JsonKey(name: 'svg_url') String? svgUrl,
       Set<PokemonTypes>? types,
+      @JsonKey(name: 'flavor_text') String? flavorText,
       @JsonKey(name: 'base_happiness') int? baseHappiness,
       @JsonKey(name: 'capture_rate') int? captureRate,
       @JsonKey(name: 'is_baby') bool? isBaby,
@@ -126,6 +129,7 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
     Object? types = freezed,
+    Object? flavorText = freezed,
     Object? baseHappiness = freezed,
     Object? captureRate = freezed,
     Object? isBaby = freezed,
@@ -195,6 +199,10 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
               as Set<PokemonTypes>?,
+      flavorText: freezed == flavorText
+          ? _value.flavorText
+          : flavorText // ignore: cast_nullable_to_non_nullable
+              as String?,
       baseHappiness: freezed == baseHappiness
           ? _value.baseHappiness
           : baseHappiness // ignore: cast_nullable_to_non_nullable
@@ -251,6 +259,7 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       @JsonKey(name: 'is_default') bool? isDefault,
       @JsonKey(name: 'svg_url') String? svgUrl,
       Set<PokemonTypes>? types,
+      @JsonKey(name: 'flavor_text') String? flavorText,
       @JsonKey(name: 'base_happiness') int? baseHappiness,
       @JsonKey(name: 'capture_rate') int? captureRate,
       @JsonKey(name: 'is_baby') bool? isBaby,
@@ -287,6 +296,7 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
     Object? isDefault = freezed,
     Object? svgUrl = freezed,
     Object? types = freezed,
+    Object? flavorText = freezed,
     Object? baseHappiness = freezed,
     Object? captureRate = freezed,
     Object? isBaby = freezed,
@@ -356,6 +366,10 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
               as Set<PokemonTypes>?,
+      flavorText: freezed == flavorText
+          ? _value.flavorText
+          : flavorText // ignore: cast_nullable_to_non_nullable
+              as String?,
       baseHappiness: freezed == baseHappiness
           ? _value.baseHappiness
           : baseHappiness // ignore: cast_nullable_to_non_nullable
@@ -407,6 +421,7 @@ class _$PokemonModelImpl implements _PokemonModel {
       @JsonKey(name: 'is_default') this.isDefault,
       @JsonKey(name: 'svg_url') this.svgUrl,
       final Set<PokemonTypes>? types,
+      @JsonKey(name: 'flavor_text') this.flavorText,
       @JsonKey(name: 'base_happiness') this.baseHappiness,
       @JsonKey(name: 'capture_rate') this.captureRate,
       @JsonKey(name: 'is_baby') this.isBaby,
@@ -469,6 +484,9 @@ class _$PokemonModelImpl implements _PokemonModel {
   }
 
   @override
+  @JsonKey(name: 'flavor_text')
+  final String? flavorText;
+  @override
   @JsonKey(name: 'base_happiness')
   final int? baseHappiness;
   @override
@@ -500,7 +518,7 @@ class _$PokemonModelImpl implements _PokemonModel {
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, baseHp: $baseHp, baseAttack: $baseAttack, baseDefense: $baseDefense, baseSpecialAttack: $baseSpecialAttack, baseSpecialDefense: $baseSpecialDefense, baseSpeed: $baseSpeed, isDefault: $isDefault, svgUrl: $svgUrl, types: $types, baseHappiness: $baseHappiness, captureRate: $captureRate, isBaby: $isBaby, isLegendary: $isLegendary, isMythical: $isMythical, evolutionId: $evolutionId, pokemonEvolutions: $pokemonEvolutions)';
+    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, baseHp: $baseHp, baseAttack: $baseAttack, baseDefense: $baseDefense, baseSpecialAttack: $baseSpecialAttack, baseSpecialDefense: $baseSpecialDefense, baseSpeed: $baseSpeed, isDefault: $isDefault, svgUrl: $svgUrl, types: $types, flavorText: $flavorText, baseHappiness: $baseHappiness, captureRate: $captureRate, isBaby: $isBaby, isLegendary: $isLegendary, isMythical: $isMythical, evolutionId: $evolutionId, pokemonEvolutions: $pokemonEvolutions)';
   }
 
   @override
@@ -530,6 +548,8 @@ class _$PokemonModelImpl implements _PokemonModel {
                 other.isDefault == isDefault) &&
             (identical(other.svgUrl, svgUrl) || other.svgUrl == svgUrl) &&
             const DeepCollectionEquality().equals(other._types, _types) &&
+            (identical(other.flavorText, flavorText) ||
+                other.flavorText == flavorText) &&
             (identical(other.baseHappiness, baseHappiness) ||
                 other.baseHappiness == baseHappiness) &&
             (identical(other.captureRate, captureRate) ||
@@ -564,6 +584,7 @@ class _$PokemonModelImpl implements _PokemonModel {
         isDefault,
         svgUrl,
         const DeepCollectionEquality().hash(_types),
+        flavorText,
         baseHappiness,
         captureRate,
         isBaby,
@@ -604,6 +625,7 @@ abstract class _PokemonModel implements PokemonModel {
       @JsonKey(name: 'is_default') final bool? isDefault,
       @JsonKey(name: 'svg_url') final String? svgUrl,
       final Set<PokemonTypes>? types,
+      @JsonKey(name: 'flavor_text') final String? flavorText,
       @JsonKey(name: 'base_happiness') final int? baseHappiness,
       @JsonKey(name: 'capture_rate') final int? captureRate,
       @JsonKey(name: 'is_baby') final bool? isBaby,
@@ -655,6 +677,9 @@ abstract class _PokemonModel implements PokemonModel {
   String? get svgUrl;
   @override
   Set<PokemonTypes>? get types;
+  @override
+  @JsonKey(name: 'flavor_text')
+  String? get flavorText;
   @override
   @JsonKey(name: 'base_happiness')
   int? get baseHappiness;

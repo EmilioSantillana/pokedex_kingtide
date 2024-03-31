@@ -142,10 +142,18 @@ class _ShowViewState extends State<ShowView> {
                         SizedBox(
                           width: double.infinity,
                           height: 300,
-                          child: SvgPicture.network(
-                            _showViewModel.pokemon.svgUrl!,
-                            fit: BoxFit.contain,
-                          )
+                          child: _showViewModel.pokemon.svgUrl != null 
+                            ? SvgPicture.network(
+                                _showViewModel.pokemon.svgUrl!,
+                                fit: BoxFit.contain,
+                              )
+                            : Center(
+                                child: GradientText(
+                                  text: "NO IMAGE",
+                                  colors: _currentColors,
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                              ),
                         ),
                         Row(
                           children: [
@@ -181,9 +189,17 @@ class _ShowViewState extends State<ShowView> {
                           height: 50,
                         ),
                         GradientText(
+                          text: _showViewModel.pokemon.flavorText!,
+                          colors: _currentColors,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        GradientText(
                           text: "Base stats:",
                           colors: _currentColors,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 25),
                         ),
                         const SizedBox(
                           height: 10,
@@ -227,7 +243,7 @@ class _ShowViewState extends State<ShowView> {
                               GradientText(
                                 text: "Evolution chain",
                                 colors: _currentColors,
-                                style: const TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 25),
                               ),
                               SizedBox(
                                 height: 300,
@@ -242,10 +258,18 @@ class _ShowViewState extends State<ShowView> {
                                             SizedBox(
                                               height: 200,
                                               width: 200,
-                                              child: SvgPicture.network(
-                                                _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl!,
-                                                fit: BoxFit.contain,
-                                              ),
+                                              child: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl != null 
+                                                ? SvgPicture.network(
+                                                    _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl!,
+                                                    fit: BoxFit.contain,
+                                                  )
+                                                : Center(
+                                                    child: GradientText(
+                                                      text: "NO IMAGE",
+                                                      colors: _currentColors,
+                                                      style: const TextStyle(fontSize: 20),
+                                                    ),
+                                                  ),
                                             ),
                                             GradientText(
                                               text: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].name!.toUpperCase(),

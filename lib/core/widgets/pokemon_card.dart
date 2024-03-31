@@ -94,12 +94,18 @@ class PokemonCard extends StatelessWidget {
                     SizedBox(
                       height: 200,
                       width: 150,
-                      child: pokemon.svgUrl != null
-                          ? SvgPicture.network(
-                              pokemon.svgUrl!,
-                              fit: BoxFit.contain,
-                            )
-                          : Container(),
+                      child: pokemon.svgUrl != null 
+                        ? SvgPicture.network(
+                            pokemon.svgUrl!,
+                            fit: BoxFit.contain,
+                          )
+                        : Center(
+                            child: GradientText(
+                              text: "NO IMAGE",
+                              colors: currentColors,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ),
                     ),
                     Positioned(
                       top: 170,

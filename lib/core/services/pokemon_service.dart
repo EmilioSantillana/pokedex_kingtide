@@ -93,6 +93,16 @@ class PokemonService extends IPokemonService {
       }
       data['evolution_id'] = getIdFromUrl(data['evolution_chain']['url']);
 
+      String flavorTextEnglish(List<dynamic> entries) {
+        for (var entry in entries) {
+          if (entry["language"]["name"] == "en") {
+            return entry["flavor_text"];
+          }
+        }
+        return "Not Found";
+      }
+      data['flavor_text'] = flavorTextEnglish(data['flavor_text_entries']);
+
       PokemonModel pokemon = PokemonModel.fromJson(data);
       return pokemon;
     }

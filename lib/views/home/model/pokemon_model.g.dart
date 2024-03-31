@@ -25,6 +25,7 @@ _$PokemonModelImpl _$$PokemonModelImplFromJson(Map<String, dynamic> json) =>
       types: (json['types'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$PokemonTypesEnumMap, e))
           .toSet(),
+      flavorText: json['flavor_text'] as String?,
       baseHappiness: json['base_happiness'] as int?,
       captureRate: json['capture_rate'] as int?,
       isBaby: json['is_baby'] as bool?,
@@ -53,6 +54,7 @@ Map<String, dynamic> _$$PokemonModelImplToJson(_$PokemonModelImpl instance) =>
       'is_default': instance.isDefault,
       'svg_url': instance.svgUrl,
       'types': instance.types?.map((e) => _$PokemonTypesEnumMap[e]!).toList(),
+      'flavor_text': instance.flavorText,
       'base_happiness': instance.baseHappiness,
       'capture_rate': instance.captureRate,
       'is_baby': instance.isBaby,
