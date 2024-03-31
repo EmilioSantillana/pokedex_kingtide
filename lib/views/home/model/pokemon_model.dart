@@ -33,7 +33,7 @@ class PokemonModel with _$PokemonModel {
     int? height,
     int? weight,
     @JsonKey(name: 'base_experience') int? baseExperience,
-    @JsonKey(name: 'base_hp') int? baseStat,
+    @JsonKey(name: 'base_hp') int? baseHp,
     @JsonKey(name: 'base_attack') int? baseAttack,
     @JsonKey(name: 'base_defense') int? baseDefense,
     @JsonKey(name: 'base_special_attack') int? baseSpecialAttack,
@@ -63,7 +63,7 @@ extension PokemonModelExtension on PokemonModel {
         height != null &&
         weight != null &&
         baseExperience != null &&
-        baseStat != null &&
+        baseHp != null &&
         baseAttack != null &&
         baseDefense != null &&
         baseSpecialAttack != null &&
@@ -89,7 +89,7 @@ extension PokemonModelExtension on PokemonModel {
       height: other.height ?? height,
       weight: other.weight ?? weight,
       baseExperience: other.baseExperience ?? baseExperience,
-      baseStat: other.baseStat ?? baseStat,
+      baseHp: other.baseHp ?? baseHp,
       baseAttack: other.baseAttack ?? baseAttack,
       baseDefense: other.baseDefense ?? baseDefense,
       baseSpecialAttack: other.baseSpecialAttack ?? baseSpecialAttack,

@@ -28,7 +28,7 @@ mixin _$PokemonModel {
   @JsonKey(name: 'base_experience')
   int? get baseExperience => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_hp')
-  int? get baseStat => throw _privateConstructorUsedError;
+  int? get baseHp => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_attack')
   int? get baseAttack => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_defense')
@@ -79,7 +79,7 @@ abstract class $PokemonModelCopyWith<$Res> {
       int? height,
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
-      @JsonKey(name: 'base_hp') int? baseStat,
+      @JsonKey(name: 'base_hp') int? baseHp,
       @JsonKey(name: 'base_attack') int? baseAttack,
       @JsonKey(name: 'base_defense') int? baseDefense,
       @JsonKey(name: 'base_special_attack') int? baseSpecialAttack,
@@ -117,7 +117,7 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
     Object? height = freezed,
     Object? weight = freezed,
     Object? baseExperience = freezed,
-    Object? baseStat = freezed,
+    Object? baseHp = freezed,
     Object? baseAttack = freezed,
     Object? baseDefense = freezed,
     Object? baseSpecialAttack = freezed,
@@ -159,9 +159,9 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
           ? _value.baseExperience
           : baseExperience // ignore: cast_nullable_to_non_nullable
               as int?,
-      baseStat: freezed == baseStat
-          ? _value.baseStat
-          : baseStat // ignore: cast_nullable_to_non_nullable
+      baseHp: freezed == baseHp
+          ? _value.baseHp
+          : baseHp // ignore: cast_nullable_to_non_nullable
               as int?,
       baseAttack: freezed == baseAttack
           ? _value.baseAttack
@@ -242,7 +242,7 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       int? height,
       int? weight,
       @JsonKey(name: 'base_experience') int? baseExperience,
-      @JsonKey(name: 'base_hp') int? baseStat,
+      @JsonKey(name: 'base_hp') int? baseHp,
       @JsonKey(name: 'base_attack') int? baseAttack,
       @JsonKey(name: 'base_defense') int? baseDefense,
       @JsonKey(name: 'base_special_attack') int? baseSpecialAttack,
@@ -278,7 +278,7 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? weight = freezed,
     Object? baseExperience = freezed,
-    Object? baseStat = freezed,
+    Object? baseHp = freezed,
     Object? baseAttack = freezed,
     Object? baseDefense = freezed,
     Object? baseSpecialAttack = freezed,
@@ -320,9 +320,9 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
           ? _value.baseExperience
           : baseExperience // ignore: cast_nullable_to_non_nullable
               as int?,
-      baseStat: freezed == baseStat
-          ? _value.baseStat
-          : baseStat // ignore: cast_nullable_to_non_nullable
+      baseHp: freezed == baseHp
+          ? _value.baseHp
+          : baseHp // ignore: cast_nullable_to_non_nullable
               as int?,
       baseAttack: freezed == baseAttack
           ? _value.baseAttack
@@ -398,7 +398,7 @@ class _$PokemonModelImpl implements _PokemonModel {
       this.height,
       this.weight,
       @JsonKey(name: 'base_experience') this.baseExperience,
-      @JsonKey(name: 'base_hp') this.baseStat,
+      @JsonKey(name: 'base_hp') this.baseHp,
       @JsonKey(name: 'base_attack') this.baseAttack,
       @JsonKey(name: 'base_defense') this.baseDefense,
       @JsonKey(name: 'base_special_attack') this.baseSpecialAttack,
@@ -436,7 +436,7 @@ class _$PokemonModelImpl implements _PokemonModel {
   final int? baseExperience;
   @override
   @JsonKey(name: 'base_hp')
-  final int? baseStat;
+  final int? baseHp;
   @override
   @JsonKey(name: 'base_attack')
   final int? baseAttack;
@@ -500,7 +500,7 @@ class _$PokemonModelImpl implements _PokemonModel {
 
   @override
   String toString() {
-    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, baseStat: $baseStat, baseAttack: $baseAttack, baseDefense: $baseDefense, baseSpecialAttack: $baseSpecialAttack, baseSpecialDefense: $baseSpecialDefense, baseSpeed: $baseSpeed, isDefault: $isDefault, svgUrl: $svgUrl, types: $types, baseHappiness: $baseHappiness, captureRate: $captureRate, isBaby: $isBaby, isLegendary: $isLegendary, isMythical: $isMythical, evolutionId: $evolutionId, pokemonEvolutions: $pokemonEvolutions)';
+    return 'PokemonModel(id: $id, name: $name, order: $order, height: $height, weight: $weight, baseExperience: $baseExperience, baseHp: $baseHp, baseAttack: $baseAttack, baseDefense: $baseDefense, baseSpecialAttack: $baseSpecialAttack, baseSpecialDefense: $baseSpecialDefense, baseSpeed: $baseSpeed, isDefault: $isDefault, svgUrl: $svgUrl, types: $types, baseHappiness: $baseHappiness, captureRate: $captureRate, isBaby: $isBaby, isLegendary: $isLegendary, isMythical: $isMythical, evolutionId: $evolutionId, pokemonEvolutions: $pokemonEvolutions)';
   }
 
   @override
@@ -515,8 +515,7 @@ class _$PokemonModelImpl implements _PokemonModel {
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.baseExperience, baseExperience) ||
                 other.baseExperience == baseExperience) &&
-            (identical(other.baseStat, baseStat) ||
-                other.baseStat == baseStat) &&
+            (identical(other.baseHp, baseHp) || other.baseHp == baseHp) &&
             (identical(other.baseAttack, baseAttack) ||
                 other.baseAttack == baseAttack) &&
             (identical(other.baseDefense, baseDefense) ||
@@ -556,7 +555,7 @@ class _$PokemonModelImpl implements _PokemonModel {
         height,
         weight,
         baseExperience,
-        baseStat,
+        baseHp,
         baseAttack,
         baseDefense,
         baseSpecialAttack,
@@ -596,7 +595,7 @@ abstract class _PokemonModel implements PokemonModel {
       final int? height,
       final int? weight,
       @JsonKey(name: 'base_experience') final int? baseExperience,
-      @JsonKey(name: 'base_hp') final int? baseStat,
+      @JsonKey(name: 'base_hp') final int? baseHp,
       @JsonKey(name: 'base_attack') final int? baseAttack,
       @JsonKey(name: 'base_defense') final int? baseDefense,
       @JsonKey(name: 'base_special_attack') final int? baseSpecialAttack,
@@ -632,7 +631,7 @@ abstract class _PokemonModel implements PokemonModel {
   int? get baseExperience;
   @override
   @JsonKey(name: 'base_hp')
-  int? get baseStat;
+  int? get baseHp;
   @override
   @JsonKey(name: 'base_attack')
   int? get baseAttack;
