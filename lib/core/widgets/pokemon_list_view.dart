@@ -29,8 +29,20 @@ class PokemonListView extends StatelessWidget {
             onTap: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => ShowView(pokemon: pokemon, homeViewModel: homeViewModel),
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (_, __, ___) => ShowView(pokemon: pokemon, homeViewModel: homeViewModel),
+                  transitionsBuilder: (_, animation, __, child) {
+                    return ScaleTransition(
+                      scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.fastOutSlowIn,
+                        ),
+                      ),
+                      child: child,
+                    );
+                  },
                 ),
               );
             },
