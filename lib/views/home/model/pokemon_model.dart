@@ -49,10 +49,10 @@ class PokemonModel with _$PokemonModel {
     @JsonKey(name: 'is_legendary') bool? isLegendary,
     @JsonKey(name: 'is_mythical') bool? isMythical,
     @JsonKey(name: 'evolution_id') int? evolutionId,
-    @JsonKey(name: 'pokemon_evolutions') Set<String>? pokemonEvolutions,
+    @JsonKey(name: 'pokemon_evolutions') Set<PokemonModel>? pokemonEvolutions,
   }) = _PokemonModel;
 
-  factory PokemonModel.fromJson(Map<String, dynamic> json) => _$PokemonModelFromJson(json); 
+  factory PokemonModel.fromJson(Map<String, dynamic> json) => _$PokemonModelFromJson(json);
 }
 
 extension PokemonModelExtension on PokemonModel {

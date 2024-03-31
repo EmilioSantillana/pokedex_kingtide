@@ -117,7 +117,14 @@ class PokemonService extends IPokemonService {
         }
         return evolutions;
       }
-      data['pokemon_evolutions'] = getEvolutions(data['chain']).toList();
+      List<String> pokemonsNameEvolution = getEvolutions(data['chain']).toList();
+
+      List<Map<String, dynamic>> pokemonEvolutions = [];
+      for (var name in pokemonsNameEvolution) {
+        PokemonModel? pokemon  = await fetchPokemonByName(pokemonName: name);
+        pokemonEvolutions.add(pokemon!.toJson());
+      }
+      data['pokemon_evolutions'] = pokemonEvolutions;
       data.remove('id');
 
       PokemonModel pokemon = PokemonModel.fromJson(data);

@@ -32,7 +32,7 @@ _$PokemonModelImpl _$$PokemonModelImplFromJson(Map<String, dynamic> json) =>
       isMythical: json['is_mythical'] as bool?,
       evolutionId: json['evolution_id'] as int?,
       pokemonEvolutions: (json['pokemon_evolutions'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((e) => PokemonModel.fromJson(e as Map<String, dynamic>))
           .toSet(),
     );
 

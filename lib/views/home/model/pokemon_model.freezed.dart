@@ -57,7 +57,8 @@ mixin _$PokemonModel {
   @JsonKey(name: 'evolution_id')
   int? get evolutionId => throw _privateConstructorUsedError;
   @JsonKey(name: 'pokemon_evolutions')
-  Set<String>? get pokemonEvolutions => throw _privateConstructorUsedError;
+  Set<PokemonModel>? get pokemonEvolutions =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -93,7 +94,8 @@ abstract class $PokemonModelCopyWith<$Res> {
       @JsonKey(name: 'is_legendary') bool? isLegendary,
       @JsonKey(name: 'is_mythical') bool? isMythical,
       @JsonKey(name: 'evolution_id') int? evolutionId,
-      @JsonKey(name: 'pokemon_evolutions') Set<String>? pokemonEvolutions});
+      @JsonKey(name: 'pokemon_evolutions')
+      Set<PokemonModel>? pokemonEvolutions});
 }
 
 /// @nodoc
@@ -220,7 +222,7 @@ class _$PokemonModelCopyWithImpl<$Res, $Val extends PokemonModel>
       pokemonEvolutions: freezed == pokemonEvolutions
           ? _value.pokemonEvolutions
           : pokemonEvolutions // ignore: cast_nullable_to_non_nullable
-              as Set<String>?,
+              as Set<PokemonModel>?,
     ) as $Val);
   }
 }
@@ -255,7 +257,8 @@ abstract class _$$PokemonModelImplCopyWith<$Res>
       @JsonKey(name: 'is_legendary') bool? isLegendary,
       @JsonKey(name: 'is_mythical') bool? isMythical,
       @JsonKey(name: 'evolution_id') int? evolutionId,
-      @JsonKey(name: 'pokemon_evolutions') Set<String>? pokemonEvolutions});
+      @JsonKey(name: 'pokemon_evolutions')
+      Set<PokemonModel>? pokemonEvolutions});
 }
 
 /// @nodoc
@@ -380,7 +383,7 @@ class __$$PokemonModelImplCopyWithImpl<$Res>
       pokemonEvolutions: freezed == pokemonEvolutions
           ? _value._pokemonEvolutions
           : pokemonEvolutions // ignore: cast_nullable_to_non_nullable
-              as Set<String>?,
+              as Set<PokemonModel>?,
     ));
   }
 }
@@ -411,7 +414,7 @@ class _$PokemonModelImpl implements _PokemonModel {
       @JsonKey(name: 'is_mythical') this.isMythical,
       @JsonKey(name: 'evolution_id') this.evolutionId,
       @JsonKey(name: 'pokemon_evolutions')
-      final Set<String>? pokemonEvolutions})
+      final Set<PokemonModel>? pokemonEvolutions})
       : _types = types,
         _pokemonEvolutions = pokemonEvolutions;
 
@@ -483,10 +486,10 @@ class _$PokemonModelImpl implements _PokemonModel {
   @override
   @JsonKey(name: 'evolution_id')
   final int? evolutionId;
-  final Set<String>? _pokemonEvolutions;
+  final Set<PokemonModel>? _pokemonEvolutions;
   @override
   @JsonKey(name: 'pokemon_evolutions')
-  Set<String>? get pokemonEvolutions {
+  Set<PokemonModel>? get pokemonEvolutions {
     final value = _pokemonEvolutions;
     if (value == null) return null;
     if (_pokemonEvolutions is EqualUnmodifiableSetView)
@@ -609,7 +612,7 @@ abstract class _PokemonModel implements PokemonModel {
       @JsonKey(name: 'is_mythical') final bool? isMythical,
       @JsonKey(name: 'evolution_id') final int? evolutionId,
       @JsonKey(name: 'pokemon_evolutions')
-      final Set<String>? pokemonEvolutions}) = _$PokemonModelImpl;
+      final Set<PokemonModel>? pokemonEvolutions}) = _$PokemonModelImpl;
 
   factory _PokemonModel.fromJson(Map<String, dynamic> json) =
       _$PokemonModelImpl.fromJson;
@@ -673,7 +676,7 @@ abstract class _PokemonModel implements PokemonModel {
   int? get evolutionId;
   @override
   @JsonKey(name: 'pokemon_evolutions')
-  Set<String>? get pokemonEvolutions;
+  Set<PokemonModel>? get pokemonEvolutions;
   @override
   @JsonKey(ignore: true)
   _$$PokemonModelImplCopyWith<_$PokemonModelImpl> get copyWith =>
