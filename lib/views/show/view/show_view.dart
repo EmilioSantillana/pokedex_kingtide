@@ -111,11 +111,11 @@ class _ShowViewState extends State<ShowView> {
                             Column(
                               children: [
                                 GradientText(
-                                  text: "${widget.pokemon.id}",
+                                  text: "${_showViewModel.pokemon.id}",
                                   colors: _currentColors,
                                   style: const TextStyle(fontSize: 15),
                                 ),
-                                for (var type in widget.pokemon.types!)
+                                for (var type in _showViewModel.pokemon.types!)
                                   Container(
                                     width: 80,
                                     alignment: Alignment.center,
@@ -245,57 +245,92 @@ class _ShowViewState extends State<ShowView> {
                                 colors: _currentColors,
                                 style: const TextStyle(fontSize: 25),
                               ),
-                              SizedBox(
-                                height: 300,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: _showViewModel.pokemon.pokemonEvolutions!.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return Row(
-                                      children: [
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 200,
-                                              width: 200,
-                                              child: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl != null 
-                                                ? SvgPicture.network(
-                                                    _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl!,
-                                                    fit: BoxFit.contain,
-                                                  )
-                                                : Center(
-                                                    child: GradientText(
-                                                      text: "NO IMAGE",
-                                                      colors: _currentColors,
-                                                      style: const TextStyle(fontSize: 20),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                child: SizedBox(
+                                  height: 300,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: _showViewModel.pokemon.pokemonEvolutions!.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return Row(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              GradientText(
+                                                text: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].id!.toString(),
+                                                colors: _currentColors,
+                                                style: const TextStyle(fontSize: 20),
+                                              ),
+                                              SizedBox(
+                                                height: 200,
+                                                width: 200,
+                                                child: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl != null 
+                                                  ? SvgPicture.network(
+                                                      _showViewModel.pokemon.pokemonEvolutions!.toList()[index].svgUrl!,
+                                                      fit: BoxFit.contain,
+                                                    )
+                                                  : Center(
+                                                      child: GradientText(
+                                                        text: "NO IMAGE",
+                                                        colors: _currentColors,
+                                                        style: const TextStyle(fontSize: 20),
+                                                      ),
                                                     ),
-                                                  ),
-                                            ),
-                                            GradientText(
-                                              text: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].name!.toUpperCase(),
-                                              colors: _currentColors,
-                                              style: const TextStyle(fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                        index+1 < _showViewModel.pokemon.pokemonEvolutions!.length 
-                                          ? const Icon(
-                                            Icons.arrow_forward,
-                                            size: 100,
-                                          )
-                                          : Container()
-                                      ],
-                                    ); 
-                                  },
+                                              ),
+                                              GradientText(
+                                                text: _showViewModel.pokemon.pokemonEvolutions!.toList()[index].name!.toUpperCase(),
+                                                colors: _currentColors,
+                                                style: const TextStyle(fontSize: 20),
+                                              ),
+                                              Column(
+                                                children: [
+                                                  for (var type in _showViewModel.pokemon.pokemonEvolutions!.toList()[index].types!)
+                                                    Container(
+                                                      width: 80,
+                                                      alignment: Alignment.center,
+                                                      margin: const EdgeInsets.only(bottom: 5),
+                                                      decoration: BoxDecoration(
+                                                        gradient: LinearGradient(
+                                                          colors: pokemonTypeColors[type]!,
+                                                          begin: Alignment.topLeft,
+                                                          end: Alignment.bottomRight,
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        type.name.toUpperCase(),
+                                                        style: const TextStyle(
+                                                          fontSize: 8,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          index+1 < _showViewModel.pokemon.pokemonEvolutions!.length 
+                                            ? const Icon(
+                                              Icons.arrow_forward,
+                                              size: 100,
+                                            )
+                                            : Container()
+                                        ],
+                                      ); 
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
                           )
-                          : GradientText(
-                              text: "No evolution chain",
-                              colors: _currentColors,
-                              style: const TextStyle(fontSize: 15),
-                            ),
+                          : Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 50),
+                            child: GradientText(
+                                text: "No evolution chain",
+                                colors: _currentColors,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                          ),
                       ],
                     ),
                   ),

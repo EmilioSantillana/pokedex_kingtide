@@ -12,16 +12,10 @@ class PokemonService extends IPokemonService {
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data['pokemon_species'] as List;
 
-      //Función para extraer el ID de la URL
-      int getIdFromUrl(String url) {
-        final parts = url.split('/');
-        return int.tryParse(parts[parts.length - 2]) ?? 0;
-      }
-
       //Ordenar los datos por ID
       data.sort((a, b) {
-        final idA = getIdFromUrl(a['url']);
-        final idB = getIdFromUrl(b['url']);
+        final idA = _getIdFromUrl(a['url']);
+        final idB = _getIdFromUrl(b['url']);
         return idA.compareTo(idB);
       });
 
@@ -36,16 +30,10 @@ class PokemonService extends IPokemonService {
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data['pokemon'] as List;
 
-      //Función para extraer el ID de la URL
-      int getIdFromUrl(String url) {
-        final parts = url.split('/');
-        return int.tryParse(parts[parts.length - 2]) ?? 0;
-      }
-
       //Ordenar los datos por ID
       data.sort((a, b) {
-        final idA = getIdFromUrl(a['pokemon']['url']);
-        final idB = getIdFromUrl(b['pokemon']['url']);
+        final idA = _getIdFromUrl(a['pokemon']['url']);
+        final idB = _getIdFromUrl(b['pokemon']['url']);
         return idA.compareTo(idB);
       });
 
@@ -86,12 +74,7 @@ class PokemonService extends IPokemonService {
     if (response.statusCode == HttpStatus.ok) {
       var data = response.data as Map<String, dynamic>;
 
-      //Función para extraer el ID de la URL
-      int getIdFromUrl(String url) {
-        final parts = url.split('/');
-        return int.tryParse(parts[parts.length - 2]) ?? 0;
-      }
-      data['evolution_id'] = getIdFromUrl(data['evolution_chain']['url']);
+      data['evolution_id'] = _getIdFromUrl(data['evolution_chain']['url']);
 
       String flavorTextEnglish(List<dynamic> entries) {
         for (var entry in entries) {
@@ -141,5 +124,11 @@ class PokemonService extends IPokemonService {
       return pokemon;
     }
     return null;
+  }
+
+  //Función para extraer el ID de la URL. Ejemplo: (https://pokeapi.co/api/v2/pokemon/1/) -> 1
+  int _getIdFromUrl(String url) {
+    final parts = url.split('/');
+    return int.tryParse(parts[parts.length - 2]) ?? 0;
   }
 }
