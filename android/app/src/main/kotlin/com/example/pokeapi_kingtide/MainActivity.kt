@@ -1,4 +1,4 @@
-package com.example.pokeapi_kingtide
+package com.kingtide.pokedex
 
 import io.flutter.embedding.android.FlutterActivity
 

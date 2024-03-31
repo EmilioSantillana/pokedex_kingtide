@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "pokeapi_kingtide" "\0"
+            VALUE "CompanyName", "com.kingtide" "\0"
+            VALUE "FileDescription", "pokedex" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "pokeapi_kingtide" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "pokeapi_kingtide.exe" "\0"
-            VALUE "ProductName", "pokeapi_kingtide" "\0"
+            VALUE "InternalName", "pokedex_kingtide" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.kingtide. All rights reserved." "\0"
+            VALUE "OriginalFilename", "pokedex_kingtide.exe" "\0"
+            VALUE "ProductName", "pokedex_kingtide" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

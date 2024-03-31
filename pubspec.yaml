@@ -1,5 +1,5 @@
-name: pokeapi_kingtide
-description: "A new Flutter project."
+name: pokedex_kingtide
+description: "A pokedex app developed by Emilio Santillana"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -43,6 +43,7 @@ dependencies:
   json_annotation: ^4.8.1
   dio: ^5.4.1
   flutter_svg: ^2.0.10+1
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,24 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   json_serializable: ^6.7.1
   build_runner: ^2.4.8
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/pokeball.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icons/pokeball.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/icons/pokeball.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icons/pokeball.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

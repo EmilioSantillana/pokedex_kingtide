@@ -1,4 +1,4 @@
-# pokeapi_kingtide
+# pokedex_kingtide
 
 A new Flutter project.
 
