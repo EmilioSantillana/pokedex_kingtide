@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "803562556288",
+    "project_id": "pokedexkingtide",
+    "storage_bucket": "pokedexkingtide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803562556288:android:a121dffac2fcfed3478f65",
+        "android_client_info": {
+          "package_name": "com.kingtide.pokedex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOD6qU1HnunwLX1s4PwGIZIS17-AAHy58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
