@@ -1,6 +1,6 @@
 # pokedex_kingtide
 
-A new Flutter project.
+A pokedex app developed by Emilio Santillana
 
 ## Getting Started
 
