@@ -3,6 +3,55 @@ import 'dart:io';
 import '../../views/home/model/pokemon_model.dart';
 import 'i_pokemon_service.dart';
 
+/* POKEAPI GRAPHQL EXAMPLE
+  query PokeAPIquery {
+    gen_1_2_species: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {name: {_in: ["generation-i", "generation-ii"]}}}, order_by: {id: asc}) {
+      name
+      id
+      order
+      is_mythical
+      is_legendary
+      is_baby
+      hatch_counter
+      base_happiness
+      capture_rate
+      evolution_chain_id
+      evolves_from_species_id
+      forms_switchable
+      gender_rate
+      generation_id
+      has_gender_differences
+      growth_rate_id
+      evolution_chain: pokemon_v2_evolutionchain {
+        id
+        pokemon_v2_pokemonspecies(order_by: {id: asc}) {
+          id
+          name
+          evolves_from_species_id
+        }
+      }
+      pokemon: pokemon_v2_pokemons {
+        id
+        is_default
+        name
+        order
+        pokemon_species_id
+        height
+        base_experience
+        sprite_url: pokemon_v2_pokemonsprites {
+          sprites(path: "[\"other\"][\"dream_world\"]")
+        }
+        stats: pokemon_v2_pokemonstats {
+          base_stat
+          pokemon_v2_stat {
+            name
+          }
+        }
+      }
+    }
+  }
+*/
+
 class PokemonService extends IPokemonService {
   PokemonService(super.dio);
 
